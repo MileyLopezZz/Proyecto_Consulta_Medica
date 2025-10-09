@@ -63,6 +63,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -80,11 +81,11 @@ WSGI_APPLICATION = 'clinicaMedicaCore.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'consultaMedicaBD',
+        'NAME': 'consultamedicabd',
         'USER': 'root',
         'PASSWORD': '1309',
-        'HOST': 'localhost',
-        'PORT': '3309',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
@@ -123,10 +124,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL ='static/'
 
-#para aceder a los archivos staticos creados
-STATICFILES_DIRS =[os.path.join(BASE_DIR, 'static')]
+# para acceder a los archivos estáticos creados
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

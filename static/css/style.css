@@ -1,0 +1,112 @@
+/* Variables de colores */
+:root {
+    --color-primario: #262016;
+    --color-secundario: #F7F4EF;
+    --color-acento: #E8DFD7;
+    --color-boton: #8B6B4C;
+    --color-boton-hover: #B87333;
+    --color-boton-secundario: #EFEAE2;
+    --color-boton-secundario-hover: #D1D1D1;
+    --color-texto: #2C2C2C;
+    --color-texto-secundario: #7A7A7A;
+    --shadow: 0 2px 10px rgba(139, 107, 76, 0.1);
+}
+
+/* Estilo general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-secundario);
+    color: var(--color-texto);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header .logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color-boton);
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 2rem;
+    color: var(--color-primario);
+    margin-bottom: 1rem;
+}
+
+/* Estilo del formulario */
+.date-time-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.date-picker input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid var(--color-boton);
+    width: 100%;
+}
+
+.time-slot button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: var(--color-acento);
+    border: 1px solid var(--color-boton);
+    margin: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.time-slot button:hover {
+    background-color: var(--color-boton-hover);
+    color: white;
+}
+
+/* Estilo de botones */
+.btn {
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: var(--color-boton);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-boton-hover);
+}
+
+.btn-outline {
+    background-color: var(--color-boton-secundario);
+    color: var(--color-primario);
+    border: 1px solid var(--color-boton);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-boton-secundario-hover);
+    color: white;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .date-time-container {
+        flex-direction: column;
+    }
+
+    .time-slot button {
+        width: 100%;
+    }
+}
