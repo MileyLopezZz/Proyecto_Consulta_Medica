@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Usuario</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'home' %}" class="volver">&larr; Volver al inicio</a>
+
+        <div class="registro-box">
+            <h1>Crear Cuenta</h1>
+            <p class="subtitulo">Regístrate para acceder a tu portal médico personal</p>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn">Registrarse</button>
+            </form>
+
+            <div class="divider">o</div>
+
+            <p class="login">
+                ¿Ya tienes una cuenta?
+                <a href="{% url 'login' %}">Inicia sesión aquí</a>
+            </p>
+
+            {% for message in messages %}
+                <p class="mensaje">{{ message }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

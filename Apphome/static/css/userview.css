@@ -1,0 +1,142 @@
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #faf8f5;
+    color: #2d2d2d;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Logo en el header */
+    .header .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--color-cobre);
+        text-decoration: none;
+    }
+
+.logo img {
+    height: 50px;           /* tamaño del logo */
+    width: auto;            
+    transition: transform 0.3s ease;
+}
+
+/* Layout */
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 1 1 250px;
+    max-width: 260px;
+}
+
+.profile-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.contact-info {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+/* Menu lateral */
+.menu {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    transition: background 0.3s;
+}
+
+.menu a.active,
+.menu a:hover {
+    background: #2d2d2d;
+    color: #fff;
+}
+
+/* Contenido */
+.content {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Secciones */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.new-appointment {
+    background: #2d2d2d;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .main-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        max-width: 100%;
+    }
+
+    .content {
+        width: 100%;
+    }
+}

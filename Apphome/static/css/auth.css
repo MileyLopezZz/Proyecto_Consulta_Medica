@@ -1,0 +1,197 @@
+/* === ESTILO BASE (para escritorio y tablets grandes) === */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #faf8f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Enlace superior centrado */
+.volver {
+    text-decoration: none;
+    color: #a1a1a1;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* Caja del formulario (login o registro) */
+.login-box,
+.registro-box {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    padding: 50px 40px;
+    width: 400px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* Títulos */
+h1 {
+    font-size: 1.8rem;
+    color: #2d2d2d;
+    margin-bottom: 5px;
+}
+
+.subtitulo {
+    color: #8d8d8d;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+/* Formulario Django */
+form {
+    text-align: left;
+}
+
+form p {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+/* Campos */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="number"],
+form select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #fafafa;
+    box-sizing: border-box;
+}
+
+/* Botón */
+.btn {
+    background-color: #2d2d2d;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #444;
+}
+
+/* Separador */
+.divider {
+    text-align: center;
+    margin: 25px 0;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* Enlaces inferiores */
+.registro,
+.login {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.registro a,
+.login a {
+    color: #2d2d2d;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Mensajes Django */
+.mensaje {
+    color: rgb(0, 0, 0);
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+/* === RESPONSIVE DESIGN === */
+
+/* Tablets medianas (≤ 768px) */
+@media (max-width: 768px) {
+    .login-box,
+    .registro-box {
+        width: 90%;
+        padding: 40px 30px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .subtitulo {
+        font-size: 0.9rem;
+    }
+
+    form input,
+    .btn {
+        font-size: 0.95rem;
+    }
+}
+
+/* Celulares (≤ 480px) */
+@media (max-width: 480px) {
+    .login-box,
+    .registro-box {
+        width: 100%;
+        padding: 30px 20px;
+        border-radius: 0;
+        box-shadow: none;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .volver {
+        font-size: 0.85rem;
+        margin-bottom: 15px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    .subtitulo {
+        font-size: 0.85rem;
+        margin-bottom: 25px;
+    }
+
+    .btn {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    form label {
+        font-size: 0.85rem;
+    }
+
+    .divider {
+        margin: 20px 0;
+        font-size: 0.8rem;
+    }
+}

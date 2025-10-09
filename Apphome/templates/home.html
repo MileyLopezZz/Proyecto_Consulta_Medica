@@ -1,0 +1,198 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <!--Header-->  
+    <header class="main-header">
+        <nav class="navbar container">
+            <div class="logo">
+                <img src="{% static 'img/logoW.webp' %}" alt="logo">
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="#home">Inicio</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#about">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="{% url 'login' %}" class="btn btn-secondary">Iniciar Sesión</a>
+                <a href="{% url 'registro' %}" class="btn btn-primary">Registrarse</a>
+            </div>
+
+            <!--Botón de menú móvil--> 
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+        </nav>
+    </header>
+
+    <!--Contenido principal--> 
+    <main>
+        <!--Sección Hero--> 
+        <section id="home" class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                <h1 class="hero-title">Tu Salud es Nuestra Prioridad</h1>
+                <!--agregar imagen -->
+                <p class="hero-subtitle"></p>
+                <div class="hero-actions">
+                    <a href="agendarcita.html" class="btn btn-primary btn-lg">Agendar Cita</a>
+                    <a href="#services" class="btn btn-secondary btn-lg">Nuestros Servicios</a>
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <!--Sección de Servicios con Carrusel--> 
+        <section id="services" class="services-section">
+            <div class="container">
+                <header class="section-header">
+                    <h2>Nuestros Servicios</h2>
+                    <p>Ofrecemos una amplia gama de Servicios tratados por el especialista</p>
+                </header>
+
+
+                <div class="carousel-container">
+                <button class="carousel-btn carousel-btn-prev" id="prevBtn">‹</button>
+                
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="carouselTrack">
+                        
+
+                        <article class="service-card">
+                            <h3>Enfermedades del oído</h3>
+                            <p>Diagnóstico y tratamiento de infecciones, pérdida auditiva, vértigo y tinnitus.</p>
+                        </article>
+
+
+                        <article class="service-card">
+                            <h3>Patologías nasales y sinusales</h3>
+                            <p>Atención de rinitis, sinusitis y desviación del tabique, con tratamientos médicos o quirúrgicos.</p>
+                        </article>
+
+
+                        <article class="service-card">
+                            <h3>Trastornos de la voz y la laringe</h3>
+                            <p>Evaluación y manejo de disfonías, nódulos y alteraciones vocales.</p>
+                        </article>
+
+
+                        <article class="service-card">
+                            <h3>Otorrinolaringología pediátrica</h3>
+                            <p>Tratamiento de otitis, amígdalas inflamadas y problemas respiratorios en niños.</p>
+                        </article>
+
+
+                        <article class="service-card">
+                            <h3>Trastornos del sueño</h3>
+                            <p>Diagnóstico y tratamiento del ronquido y apnea del sueño para mejorar la respiración nocturna.</p>
+                        </article>
+
+                    </div>
+                </div>
+                
+                <button class="carousel-btn carousel-btn-next" id="nextBtn">›</button>
+                </div>
+
+
+                <div class="carousel-indicators" id="carouselIndicators"></div>
+            </div>
+        </section>
+
+        <!--Sección Sobre Nosotros--> 
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-image">
+                        <img src="{% static 'img/medicoW.webp' %}" alt="Medico">
+                    </div>
+
+                    <div class="about-content">
+                        <h2>Más de 20 Años de Experiencia</h2>
+                        <p>En Nuestra Clínica nos dedicamos a proporcionar atención médica de la más alta calidad. 
+                            Utilizamos tecnología de vanguardia para ofrecer diagnósticos precisos y tratamientos efectivos.</p>
+                        <ul class="about-features">
+                        <li>✓ Tecnología médica de última generación</li>
+                        <li>✓ Atención personalizada y humanizada</li>
+                        <li>✓ Instalaciones modernas y cómodas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto y Ubicación -->
+        <section id="contacto" class="contact">
+            <div class="container">
+                <h2 class="section-title">Contacto y Ubicación</h2>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Información de Contacto</h3>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Dirección</strong>
+                                <p>Colipi 484, Plaza Real, Torre Flamenco Oficina 504 5to piso<br>Copiapó, Atacama</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Teléfono</strong>
+                                <p>+52 2230896</p>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Horarios</strong>
+                                <p>De lunes a jueves: 10:30 am - 01:00 pm y 03:00 pm - 07:00 pm</p>
+                                <p>Viernes: 10:30 am - 01:00 pm</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="map-container">
+                        <div class="map-placeholder">
+                            <i class="fas fa-map"></i>
+                            <p>Mapa de Ubicación</p>
+                            <a href="https://www.google.com/maps/place/27°22'01.5%22S+70°19'53.3%22W/@-27.3670883,-70.3314819,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-27.3670883!4d-70.3314819?entry=ttu&g_ep=EgoyMDI1MDkwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-primary" style="margin-top:10px;">
+                                Ver en Google Maps
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--Footer--> 
+    <footer class="main-footer">
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Clínica. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
