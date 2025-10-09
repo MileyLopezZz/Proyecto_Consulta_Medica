@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha Médica</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Ficha Médica</h1>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form id="formFicha" method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="grid">
+
+                <div class="full">
+                    {{ form.rut_paciente.label_tag }}
+                    {{ form.rut_paciente }}
+                    {% if form.rut_paciente.errors %}
+                        <div class="error">{{ form.rut_paciente.errors }}</div>
+                    {% endif %}
+                    <div id="msg_id_rut_paciente" class="feedback-msg"></div>
+                    <button type="button" class="btn" id="btnBuscar" data-url="{% url 'buscar_paciente' %}">Buscar</button>
+                </div>
+
+                <div>
+                    <div>
+                        {{ form.nombre_paciente.label_tag }}
+                        {{ form.nombre_paciente }}
+                        {% if form.nombre_paciente.errors %}
+                            <div class="error">{{ form.nombre_paciente.errors }}</div>
+                        {% endif %}
+                        <div id="msg_id_nombre_paciente" class="feedback-msg"></div>
+                    </div>
+
+                    <div>
+                        {{ form.telefono_paciente.label_tag }}
+                        {{ form.telefono_paciente }}
+                        {% if form.telefono_paciente.errors %}
+                            <div class="error">{{ form.telefono_paciente.errors }}</div>
+                        {% endif %}
+                        <div id="msg_id_telefono_paciente" class="feedback-msg"></div>
+                    </div>
+
+                    <div class="full">
+                        {{ form.direccion_paciente.label_tag }}
+                        {{ form.direccion_paciente }}
+                        {% if form.direccion_paciente.errors %}
+                            <div class="error">{{ form.direccion_paciente.errors }}</div>
+                        {% endif %}
+                        <div id="msg_id_direccion_paciente" class="feedback-msg"></div>
+                    </div>
+
+                    <div class="full">
+                        {{ form.titulo.label_tag }}
+                        {{ form.titulo }}
+                        {% if form.titulo.errors %}
+                            <div class="error">{{ form.titulo.errors }}</div>
+                        {% endif %}
+                        <div id="msg_id_titulo" class="feedback-msg"></div>
+                    </div>
+
+                    <div class="full">
+                        {{ form.notas.label_tag }}
+                        {{ form.notas }}
+                        {% if form.notas.errors %}
+                            <div class="error">{{ form.notas.errors }}</div>
+                        {% endif %}
+                        <div id="msg_id_notas" class="feedback-msg"></div>
+                    </div>
+
+                    <div class="full">
+                        {{ form.hora_ficha.label_tag }}
+                        {{ form.hora_ficha }}
+                        {% if form.hora_ficha.errors %}
+                            <div class="error">{{ form.hora_ficha.errors }}</div>
+                        {% endif %}
+                        <div id="msg_id_hora_ficha" class="feedback-msg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" type="submit">Guardar Ficha</button>
+        </form>
+    </div>
+
+    <script src="{% static 'js/validacionesFicha.js' %}"></script>
+</body>
+</html>

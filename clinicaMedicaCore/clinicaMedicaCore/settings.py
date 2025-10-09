@@ -80,11 +80,11 @@ WSGI_APPLICATION = 'clinicaMedicaCore.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'consultaMedicaBD',
+        'NAME': 'clinica',
         'USER': 'root',
-        'PASSWORD': '1309',
-        'HOST': 'localhost',
-        'PORT': '3309',
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
