@@ -17,39 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Apphome.views import home
-from  Appsandra.views import RegisterUser,loginUser,UserView
+from Appsandra.views import RegisterUser,loginUser,UserView
+from Appclaudio.views import agendar_hora_view
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     path('', home, name='home'),
     path('registro/', RegisterUser, name='registro'),
     path('login/', loginUser, name= 'login'),
-    path('vistaUsuario/', UserView, name= 'UsuarioView')
+    path('vistaUsuario/', UserView, name= 'UsuarioView'),
+    path('agendarHora/', agendar_hora_view, name='agendar_hora'),   
 ]
