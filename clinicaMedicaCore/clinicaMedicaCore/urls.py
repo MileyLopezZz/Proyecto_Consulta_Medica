@@ -16,14 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from Apphome.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('appvaleria/', include('Appvaleria.urls')),
-    path('', include('Appclaudio.urls')),  
+    path('appclaudio', include('Appclaudio.urls')), 
+    path('', home, name='home'),
+    path('cuenta/', include('Appsandra.urls')),
+    
 ]
-
-if settings.DEBUG:
-    from django.conf import settings
-    from django.conf.urls.static import static
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

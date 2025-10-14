@@ -85,10 +85,16 @@ DATABASES = {
         # 'NAME': 'consultamedicabd',
         # 'USER': 'root',
         # 'PASSWORD': '1309',
+        #base de datos local Valeria
+        #'NAME': 'clinica',
+        #'USER': 'root',
+        #'PASSWORD': '123456',
+        #'HOST': '127.0.0.1',
+        #'PORT': '3306',
         'NAME': 'clinica',
         'USER': 'root',
-        'PASSWORD': '123456',
-        'HOST': '127.0.0.1',
+        'PASSWORD': '1309',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
