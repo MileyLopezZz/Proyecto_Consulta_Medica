@@ -1,15 +1,15 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clínica | Inicio</title>
+    <title>Home</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-    <!-- Header -->
+    <!--Header-->  
     <header class="main-header">
         <nav class="navbar container">
             <div class="logo">
@@ -23,118 +23,122 @@
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
 
-            <!-- 🔒 Acciones dinámicas según autenticación -->
             <div class="nav-actions">
-                {% if user.is_authenticated %}
-                    <span class="welcome-text">Hola, {{ user.username }}</span>
-                    <a href="{% url 'logout' %}" class="btn btn-secondary">Cerrar Sesión</a>
+                {% if user.is_authenticated and user.is_staff %}
+                    <a href="{% url 'listar_secretarias' %}" class="btn btn-primary">Gestionar Secretarias</a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline">Cerrar Sesión</a> 
                 {% else %}
                     <a href="{% url 'login' %}" class="btn btn-secondary">Iniciar Sesión</a>
                     <a href="{% url 'registro' %}" class="btn btn-primary">Registrarse</a>
                 {% endif %}
             </div>
 
-            <!-- Botón menú móvil -->
+            <!--Botón de menú móvil--> 
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
+
         </nav>
     </header>
 
-    <!-- Contenido principal -->
+    <!--Contenido principal--> 
     <main>
-        <!-- Sección Hero -->
+        <!--Sección Hero--> 
         <section id="home" class="hero-section">
             <div class="container">
                 <div class="hero-content">
-                    <h1 class="hero-title">Tu Salud es Nuestra Prioridad</h1>
-                    <p class="hero-subtitle">Atención personalizada y profesional con tecnología de vanguardia.</p>
-
-                    <div class="hero-actions">
-                        {% if user.is_authenticated %}
-                            <a href="{% url 'agendar_hora' %}" class="btn btn-primary btn-lg">Agendar Cita</a>
-                        {% else %}
-                            <a href="{% url 'login' %}?next={% url 'agendar_hora' %}" class="btn btn-primary btn-lg">Agendar Cita</a>
-                        {% endif %}
-                        <a href="#services" class="btn btn-secondary btn-lg">Nuestros Servicios</a>
-                    </div>
+                <h1 class="hero-title">Tu Salud es Nuestra Prioridad</h1>
+                <!--agregar imagen -->
+                <p class="hero-subtitle"></p>
+                <div class="hero-actions">
+                    <a href="{% url 'agendarhora' %}" class="btn btn-primary btn-lg">Agendar Cita</a>
+                    <a href="#services" class="btn btn-secondary btn-lg">Nuestros Servicios</a>
+                </div>
                 </div>
             </div>
         </section>
 
-        <!-- Sección de Servicios -->
+        <!--Sección de Servicios con Carrusel--> 
         <section id="services" class="services-section">
             <div class="container">
                 <header class="section-header">
                     <h2>Nuestros Servicios</h2>
-                    <p>Ofrecemos una amplia gama de servicios especializados por el Dr. Constanzo.</p>
+                    <p>Ofrecemos una amplia gama de Servicios tratados por el especialista</p>
                 </header>
 
+
                 <div class="carousel-container">
-                    <button class="carousel-btn carousel-btn-prev" id="prevBtn">‹</button>
-                    
-                    <div class="carousel-wrapper">
-                        <div class="carousel-track" id="carouselTrack">
+                <button class="carousel-btn carousel-btn-prev" id="prevBtn">‹</button>
+                
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="carouselTrack">
+                        
 
-                            <article class="service-card">
-                                <h3>Enfermedades del oído</h3>
-                                <p>Diagnóstico y tratamiento de infecciones, pérdida auditiva, vértigo y tinnitus.</p>
-                            </article>
+                        <article class="service-card">
+                            <h3>Enfermedades del oído</h3>
+                            <p>Diagnóstico y tratamiento de infecciones, pérdida auditiva, vértigo y tinnitus.</p>
+                        </article>
 
-                            <article class="service-card">
-                                <h3>Patologías nasales y sinusales</h3>
-                                <p>Tratamiento de rinitis, sinusitis y desviación del tabique nasal.</p>
-                            </article>
 
-                            <article class="service-card">
-                                <h3>Trastornos de la voz</h3>
-                                <p>Evaluación y manejo de disfonías, nódulos y alteraciones vocales.</p>
-                            </article>
+                        <article class="service-card">
+                            <h3>Patologías nasales y sinusales</h3>
+                            <p>Atención de rinitis, sinusitis y desviación del tabique, con tratamientos médicos o quirúrgicos.</p>
+                        </article>
 
-                            <article class="service-card">
-                                <h3>Otorrinolaringología pediátrica</h3>
-                                <p>Tratamiento de otitis, amígdalas inflamadas y problemas respiratorios en niños.</p>
-                            </article>
 
-                            <article class="service-card">
-                                <h3>Trastornos del sueño</h3>
-                                <p>Diagnóstico y tratamiento del ronquido y apnea del sueño.</p>
-                            </article>
+                        <article class="service-card">
+                            <h3>Trastornos de la voz y la laringe</h3>
+                            <p>Evaluación y manejo de disfonías, nódulos y alteraciones vocales.</p>
+                        </article>
 
-                        </div>
+
+                        <article class="service-card">
+                            <h3>Otorrinolaringología pediátrica</h3>
+                            <p>Tratamiento de otitis, amígdalas inflamadas y problemas respiratorios en niños.</p>
+                        </article>
+
+
+                        <article class="service-card">
+                            <h3>Trastornos del sueño</h3>
+                            <p>Diagnóstico y tratamiento del ronquido y apnea del sueño para mejorar la respiración nocturna.</p>
+                        </article>
+
                     </div>
-                    
-                    <button class="carousel-btn carousel-btn-next" id="nextBtn">›</button>
                 </div>
+                
+                <button class="carousel-btn carousel-btn-next" id="nextBtn">›</button>
+                </div>
+
 
                 <div class="carousel-indicators" id="carouselIndicators"></div>
             </div>
         </section>
 
-        <!-- Sección Sobre Nosotros -->
+        <!--Sección Sobre Nosotros--> 
         <section id="about" class="about-section">
             <div class="container">
                 <div class="about-grid">
                     <div class="about-image">
-                        <img src="{% static 'img/medicoW.webp' %}" alt="Médico">
+                        <img src="{% static 'img/medicoW.webp' %}" alt="Medico">
                     </div>
 
                     <div class="about-content">
                         <h2>Más de 20 Años de Experiencia</h2>
-                        <p>Nos dedicamos a ofrecer atención médica de la más alta calidad, combinando experiencia y tecnología moderna para diagnósticos precisos.</p>
+                        <p>En Nuestra Clínica nos dedicamos a proporcionar atención médica de la más alta calidad. 
+                            Utilizamos tecnología de vanguardia para ofrecer diagnósticos precisos y tratamientos efectivos.</p>
                         <ul class="about-features">
-                            <li>✓ Tecnología médica de última generación</li>
-                            <li>✓ Atención personalizada y humanizada</li>
-                            <li>✓ Instalaciones modernas y cómodas</li>
+                        <li>✓ Tecnología médica de última generación</li>
+                        <li>✓ Atención personalizada y humanizada</li>
+                        <li>✓ Instalaciones modernas y cómodas</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contacto -->
+        <!-- Contacto y Ubicación -->
         <section id="contacto" class="contact">
             <div class="container">
                 <h2 class="section-title">Contacto y Ubicación</h2>
@@ -144,38 +148,55 @@
                         <h3>Información de Contacto</h3>
                         
                         <div class="contact-item">
-                            <strong>Dirección</strong>
-                            <p>Colipi 484, Plaza Real, Torre Flamenco Oficina 504, Copiapó</p>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Dirección</strong>
+                                <p>Colipi 484, Plaza Real, Torre Flamenco Oficina 504 5to piso<br>Copiapó, Atacama</p>
+                            </div>
                         </div>
                         
                         <div class="contact-item">
-                            <strong>Teléfono</strong>
-                            <p>+52 2230896</p>
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Teléfono</strong>
+                                <p>+52 2230896</p>
+                            </div>
                         </div>
                         
+                        
                         <div class="contact-item">
-                            <strong>Horarios</strong>
-                            <p>Lunes a Jueves: 10:30 AM - 01:00 PM / 03:00 PM - 07:00 PM</p>
-                            <p>Viernes: 10:30 AM - 01:00 PM</p>
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Horarios</strong>
+                                <p>De lunes a jueves: 10:30 am - 01:00 pm y 03:00 pm - 07:00 pm</p>
+                                <p>Viernes: 10:30 am - 01:00 pm</p>
+                            </div>
                         </div>
                     </div>
                     
                     <div class="map-container">
-                        <a href="https://www.google.com/maps/place/27°22'01.5%22S+70°19'53.3%22W" target="_blank" class="btn btn-primary">
-                            Ver en Google Maps
-                        </a>
+                        <div class="map-placeholder">
+                            <i class="fas fa-map"></i>
+                            <p>Mapa de Ubicación</p>
+                            <a href="https://www.google.com/maps/place/27°22'01.5%22S+70°19'53.3%22W/@-27.3670883,-70.3314819,17z/data=!3m1!4b1!4m4!3m3!8m2!3d-27.3670883!4d-70.3314819?entry=ttu&g_ep=EgoyMDI1MDkwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-primary" style="margin-top:10px;">
+                                Ver en Google Maps
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
+    <!--Footer--> 
     <footer class="main-footer">
-        <div class="footer-bottom">
-            <p>&copy; 2025 Clínica. Todos los derechos reservados.</p>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Clínica. Todos los derechos reservados.</p>
+            </div>
         </div>
     </footer>
+
 
     <script src="{% static 'js/script.js' %}"></script>
 </body>

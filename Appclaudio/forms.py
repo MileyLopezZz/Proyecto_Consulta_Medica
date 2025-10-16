@@ -40,3 +40,29 @@ class HoraAgendadaForm(forms.ModelForm):
             if rango[0] <= hora <= rango[1]:
                 return True
         return False
+
+from django import forms
+from .models import Secretaria
+
+class SecretariaForm(forms.ModelForm):
+    class Meta:
+        model = Secretaria
+        fields = [
+            'rut_secretaria',
+            'nombre_secretaria',
+            'apellido_secretaria',
+            'email_secretaria',
+            'password_hash',
+            'usuarios_id_usuario',
+        ]
+        widgets = {
+            'password_hash': forms.PasswordInput(attrs={'placeholder': 'Contraseña'}),
+            'rut_secretaria': forms.TextInput(attrs={'placeholder': 'Ej: 12.345.678-9'}),
+            'nombre_secretaria': forms.TextInput(attrs={'placeholder': 'Nombre'}),
+            'apellido_secretaria': forms.TextInput(attrs={'placeholder': 'Apellido'}),
+            'email_secretaria': forms.EmailInput(attrs={'placeholder': 'correo@ejemplo.cl'}),
+        }
+    def clean_rut_secretaria(self):
+        rut = self.cleaned_data['rut_secretaria']
+        return rut
+    

@@ -47,3 +47,44 @@ def agendar_hora_view(request):
 def confirmacion_view(request):
     return render(request, 'Appclaudio/confirmacion.html')
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import Secretaria
+from .forms import SecretariaForm
+
+# --- CRUD Secretaria ---
+
+def listar_secretarias(request):
+    secretarias = Secretaria.objects.all()
+    return render(request, 'Appclaudio/listar_secretarias.html', {'secretarias': secretarias})
+
+def crear_secretaria(request):
+    if request.method == 'POST':
+        form = SecretariaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Secretaria agregada correctamente.")
+            return redirect('listar_secretarias')
+    else:
+        form = SecretariaForm()
+    return render(request, 'Appclaudio/form_secretaria.html', {'form': form, 'titulo': 'Agregar Secretaria'})
+
+def editar_secretaria(request, pk):
+    secretaria = get_object_or_404(Secretaria, pk=pk)
+    if request.method == 'POST':
+        form = SecretariaForm(request.POST, instance=secretaria)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Datos actualizados correctamente.")
+            return redirect('listar_secretarias')
+    else:
+        form = SecretariaForm(instance=secretaria)
+    return render(request, 'Appclaudio/form_secretaria.html', {'form': form, 'titulo': 'Editar Secretaria'})
+
+def eliminar_secretaria(request, pk):
+    secretaria = get_object_or_404(Secretaria, pk=pk)
+    if request.method == 'POST':
+        secretaria.delete()
+        messages.success(request, "Secretaria eliminada correctamente.")
+        return redirect('listar_secretarias')
+    return render(request, 'Appclaudio/eliminar_secretaria.html', {'secretaria': secretaria})
