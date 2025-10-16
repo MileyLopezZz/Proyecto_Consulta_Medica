@@ -7,7 +7,7 @@ class HoraAgendada(models.Model):
     fecha = models.DateField()
     hora_inicio = models.TimeField()
     hora_final = models.TimeField()
-    usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    # usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE) se usará esta linea cuando se implementen foreign keys
     razon = models.CharField(max_length=300)
 
     def clean(self):

@@ -8,9 +8,12 @@
 </head>
 <body>
   <div class="container" style="margin-top:150px; text-align:center;">
-    <h1> Cita registrada correctamente</h1>
-    <a class="btn btn-primary" href="/agendarHora/">Agendar otra</a>
-    <a class="btn btn-outline" href="/">Volver al inicio</a>
+    <h1>Cita registrada correctamente</h1>
+    <p>Gracias por agendar tu cita. Te esperamos en la fecha seleccionada.</p>
+    <div style="margin-top: 20px;">
+      <a class="btn btn-primary" href="{% url 'agendar_hora' %}">Agendar otra cita</a>
+      <a class="btn btn-outline" href="/">Volver al inicio</a>
+    </div>
   </div>
 </body>
 </html>
