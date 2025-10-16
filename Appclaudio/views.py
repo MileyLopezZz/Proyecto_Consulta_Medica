@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import HoraAgendada
 
 
 # Vista para mostrar la página de agendar cita

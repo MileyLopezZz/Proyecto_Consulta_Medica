@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from Apphome.views import home
 from Appsandra.views import RegisterUser,loginUser,UserView
 from Appclaudio.views import agendar_hora_view
@@ -28,5 +28,8 @@ urlpatterns = [
     path('registro/', RegisterUser, name='registro'),
     path('login/', loginUser, name= 'login'),
     path('vistaUsuario/', UserView, name= 'UsuarioView'),
-    path('agendarHora/', agendar_hora_view, name='agendar_hora'),   
+    path('agendarHora/', agendar_hora_view, name='agendar_hora'),
+    path('appvaleria/', include('Appvaleria.urls')),
+    path('appclaudio/', include('Appclaudio.urls')),
+    path('cuenta/', include('Appsandra.urls')),
 ]
