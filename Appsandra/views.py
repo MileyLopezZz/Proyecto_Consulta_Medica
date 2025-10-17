@@ -34,7 +34,7 @@ def loginUser(request):
                     #guarda los datos ensesion (se crea una cookie de sesion)
                     request.session['usuario_id'] = usuario.id
                     request.session['usuario_nombre'] = usuario.nombre
-                    messages.success(request,"Inicio secion con exito")
+                    messages.success(request,"Inicio sesión con exito")
                     return redirect('UsuarioView') # redirije a la vista de usuario.
                 else:
                     messages.error(request, "Contraseña incorrecta ❌")

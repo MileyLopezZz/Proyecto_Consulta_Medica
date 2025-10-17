@@ -17,9 +17,9 @@ class Paciente(models.Model):
 
 class FichaMedica(models.Model):
     id_ficha = models.BigAutoField(primary_key=True)
-    paciente = models.ForeignKey(
-        Paciente, on_delete=models.CASCADE, null=True, blank=True
-    )
+    # paciente = models.ForeignKey(
+    #     Paciente, on_delete=models.CASCADE, null=True, blank=True
+    # ) SE USARA PARA LA SIGUIENTE ENTREGA
     titulo = models.CharField(max_length=120)
     notas = models.TextField(blank=True, null=True)
     hora_ficha = models.DateTimeField(blank=True, null=True)

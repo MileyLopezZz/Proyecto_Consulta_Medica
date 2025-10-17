@@ -31,5 +31,8 @@ urlpatterns = [
     path('agendarHora/', agendar_hora_view, name='agendar_hora'),
     path('appvaleria/', include('Appvaleria.urls')),
     path('appclaudio/', include('Appclaudio.urls')),
-    path('cuenta/', include('Appsandra.urls')),
+    path('cuenta/', include('Appsandra.urls')), 
+    path('secretaria/', include('Appclaudio.urls')),
+    path('ficha/', include('Appvaleria.urls')),
+    path('login/', include('Appsandra.urls')),
 ]

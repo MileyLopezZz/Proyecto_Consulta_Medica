@@ -10,5 +10,4 @@ urlpatterns = [
     path('secretarias/crear/', crear_secretaria, name='crear_secretaria'),
     path('secretarias/editar/<int:pk>/', editar_secretaria, name='editar_secretaria'),
     path('secretarias/eliminar/<int:pk>/', eliminar_secretaria, name='eliminar_secretaria'),
-
 ]

@@ -1,49 +1,36 @@
 from django.shortcuts import render, redirect
 from .models import HoraAgendada
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
-@login_required
 def agendar_hora_view(request):
-    # Definir los horarios disponibles
-    lunes_a_jueves = [('10:30 AM', '01:00 PM'), ('03:00 PM', '07:00 PM')]
-    viernes = [('10:30 AM', '01:00 PM')]
+    # Verificar si el usuario está logueado 
+    if not request.session.get('usuario_id'):
+        messages.error(request, "Debes iniciar sesión para agendar una hora.")
+        return redirect('login')  # nombre de la vista de login en tus urls.py
 
-    if request.method == 'POST':
-        fecha = request.POST.get('fecha')
-        hora = request.POST.get('hora')  # Viene en formato "10:30 AM - 01:00 PM"
-
-        if not fecha or not hora:
-            messages.error(request, "Por favor selecciona una fecha y hora válida.")
-            return redirect('agendar_hora')
-
-        try:
-            hora_inicio_str, hora_final_str = hora.split(' - ')
-            hora_inicio = datetime.strptime(hora_inicio_str.strip(), '%I:%M %p').time()
-            hora_final = datetime.strptime(hora_final_str.strip(), '%I:%M %p').time()
-
-            HoraAgendada.objects.create(
-                fecha=fecha,
-                hora_inicio=hora_inicio,
-                hora_final=hora_final,
-                razon="Consulta general"
-            )
-
-            return redirect('confirmacion')
-
-        except Exception as e:
-            messages.error(request, f"Ocurrió un error: {e}")
-
-    context = {
-        'lunes_a_jueves': lunes_a_jueves,
-        'viernes': viernes,
+    # Simular horarios disponibles
+    horarios_disponibles = {
+        'Lunes a Jueves': [('10:30 AM', '01:00 PM'), ('03:00 PM', '07:00 PM')],
+        'Viernes': [('10:30 AM', '01:00 PM')],
     }
 
-    return render(request, 'Appclaudio/agendarHora.html', context)
+    # Procesar formulario si envía un POST
+    if request.method == 'POST':
+        fecha = request.POST.get('fecha')
+        hora = request.POST.get('hora')
+
+        if fecha and hora:
+            messages.success(request, f"Hora agendada para {fecha} a las {hora} correctamente.")
+            return redirect('confirmacionHora')
+        else:
+            messages.error(request, "Por favor, selecciona fecha y hora.")
+
+    return render(request, 'Appclaudio/agendarHora.html', {'horarios_disponibles': horarios_disponibles})
 
 
-@login_required
 def confirmacion_view(request):
     return render(request, 'Appclaudio/confirmacion.html')
 

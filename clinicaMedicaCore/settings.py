@@ -143,3 +143,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Redirecciones personalizadas de login/logout
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/vistaUsuario/'
+LOGOUT_REDIRECT_URL = '/'
