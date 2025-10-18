@@ -51,4 +51,16 @@ document.addEventListener("DOMContentLoaded", function() {
     // Evitar fechas pasadas en el calendario
     const hoyISO = new Date().toISOString().split("T")[0];
     fechaInput.setAttribute("min", hoyISO);
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const radios = document.querySelectorAll(".hora-item input[type='radio']");
+
+    radios.forEach(radio => {
+        radio.addEventListener("change", () => {
+            radios.forEach(r => r.parentElement.classList.remove("activo"));
+            radio.parentElement.classList.add("activo");
+        });
+    });
+});
+
 });

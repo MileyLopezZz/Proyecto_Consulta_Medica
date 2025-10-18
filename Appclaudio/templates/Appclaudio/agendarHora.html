@@ -4,70 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendar Hora Médica</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/agendarHora.js' %}" defer></script>
+    <title>Agendar Cita</title>
+    <link rel="stylesheet" href="{% static 'css/agendar.css' %}">
+    <script src="{% static 'js/horarios.js' %}" defer></script>
+    <script src="{% static 'js/validaciones_agendar.js' %}" defer></script>
 </head>
+
 <body>
-    <header class="header">
-        <div class="container">
-            <a href="/" class="logo">Consulta Médica</a>
-        </div>
-    </header>
+    <main class="container">
+        <div class="card">
+            <h1>Agendar tu cita con <br><span>Doctor Constanzo</span></h1>
 
-    <main>
-        <section class="container">
-            <h1 class="section-title">Agendar tu cita con Doctor Constanzo</h1>
-            <form method="post" action="{% url 'agendar_hora' %}">
+            <form id="form-agendar" method="POST">
                 {% csrf_token %}
-                <div class="date-time-container">
-                    <div class="date-picker">
-                        <label for="fecha">Selecciona una Fecha</label>
-                        <input type="date" name="fecha" id="fecha" required>
-                    </div>
+                <label>Selecciona una Fecha</label>
+                <input type="date" id="fecha" name="fecha" required>
 
-                    <div class="time-slot">
-                        <label>Horarios Disponibles</label>
-
-                        {% if lunes_a_jueves %}
-                            <p><strong>Lunes a Jueves</strong></p>
-                            {% for horario in lunes_a_jueves %}
-                                <label>
-                                    <input type="radio" name="hora" value="{{ horario.0 }} - {{ horario.1 }}" required>
-                                    {{ horario.0 }} - {{ horario.1 }}
-                                </label><br>
-                            {% endfor %}
-                        {% endif %}
-
-                        {% if viernes %}
-                            <p><strong>Viernes</strong></p>
-                            {% for horario in viernes %}
-                                <label>
-                                    <input type="radio" name="hora" value="{{ horario.0 }} - {{ horario.1 }}" required>
-                                    {{ horario.0 }} - {{ horario.1 }}
-                                </label><br>
-                            {% endfor %}
-                        {% endif %}
-
-                        {% if not lunes_a_jueves and not viernes %}
-                            <p>No hay horarios disponibles.</p>
-                        {% endif %}
-                    </div>
+                <label>Horarios Disponibles</label>
+                <div id="mensaje-horarios" class="mensaje-horarios"></div>
+                <div class="horarios-container" id="horarios-container">
+                    <!-- Los horarios se insertarán dinámicamente -->
                 </div>
 
-                <div class="razon-container">
-                    <label for="razon">Motivo de la cita</label>
-                    <textarea name="razon" id="razon" rows="3" placeholder="Describe brevemente el motivo"></textarea>
-                </div>
+                <label>Motivo de la cita</label>
+                <textarea name="motivo" placeholder="Describe brevemente el motivo..." required></textarea>
 
-                <div class="actions">
-                    <button type="submit" class="btn btn-primary">Agendar</button>
-                    <a href="/" class="btn btn-outline">Cancelar</a>
+                <div class="buttons">
+                    <button type="submit" class="btn">Agendar</button>
+                    <a href="{% url 'UsuarioView' %}" class="cancel">Cancelar</a>
                 </div>
             </form>
-        </section>
+        </div>
     </main>
 </body>
 </html>
-
 

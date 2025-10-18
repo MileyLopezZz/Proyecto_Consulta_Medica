@@ -1,45 +1,55 @@
-from django.shortcuts import render, redirect
-from .models import HoraAgendada
-from django.contrib import messages
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
 def agendar_hora_view(request):
-    # Verificar si el usuario está logueado 
+    # Validar sesión 
     if not request.session.get('usuario_id'):
         messages.error(request, "Debes iniciar sesión para agendar una hora.")
-        return redirect('login')  # nombre de la vista de login en tus urls.py
+        return redirect('login')
 
-    # Simular horarios disponibles
-    horarios_disponibles = {
-        'Lunes a Jueves': [('10:30 AM', '01:00 PM'), ('03:00 PM', '07:00 PM')],
-        'Viernes': [('10:30 AM', '01:00 PM')],
-    }
+    horarios_disponibles = {}
+    fecha_seleccionada = None
+    horarios_dia = []
 
-    # Procesar formulario si envía un POST
+    # Si se envía una fecha, calculamos los horarios disponibles
     if request.method == 'POST':
         fecha = request.POST.get('fecha')
-        hora = request.POST.get('hora')
+        motivo = request.POST.get('motivo')
 
-        if fecha and hora:
-            messages.success(request, f"Hora agendada para {fecha} a las {hora} correctamente.")
-            return redirect('confirmacionHora')
-        else:
-            messages.error(request, "Por favor, selecciona fecha y hora.")
+        if fecha:
+            fecha_seleccionada = datetime.strptime(fecha, "%Y-%m-%d")
+            dia_semana = fecha_seleccionada.strftime('%A')  # Monday, Tuesday...
 
-    return render(request, 'Appclaudio/agendarHora.html', {'horarios_disponibles': horarios_disponibles})
+            if dia_semana in ['Monday', 'Tuesday', 'Wednesday', 'Thursday']:
+                horarios_dia = ['10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM',
+                                '3:00 PM', '3:30 PM', '4:00 PM', '5:00 PM', '6:00 PM']
+            elif dia_semana == 'Friday':
+                horarios_dia = ['10:30 AM', '11:00 AM', '12:00 PM']
+            else:
+                horarios_dia = []  # Sábado o domingo → sin atención
 
+        # Confirmación de cita
+        if motivo and fecha:
+            messages.success(request, f"Tu cita fue agendada para {fecha} ({motivo}) ✅")
+            return redirect('confirmacion')
+
+    return render(request, 'Appclaudio/agendarHora.html', {
+        'fecha_seleccionada': fecha_seleccionada,
+        'horarios_dia': horarios_dia
+    })
 
 def confirmacion_view(request):
     return render(request, 'Appclaudio/confirmacion.html')
 
+
+# --- CRUD Secretaria ---
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Secretaria
 from .forms import SecretariaForm
 
-# --- CRUD Secretaria ---
+
 
 def listar_secretarias(request):
     secretarias = Secretaria.objects.all()
