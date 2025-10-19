@@ -20,6 +20,7 @@
 
             <div class="grid">
 
+                <!-- Campo RUT Paciente -->
                 <div class="full">
                     {{ form.rut_paciente.label_tag }}
                     {{ form.rut_paciente }}
@@ -27,7 +28,6 @@
                         <div class="error">{{ form.rut_paciente.errors }}</div>
                     {% endif %}
                     <div id="msg_id_rut_paciente" class="feedback-msg"></div>
-                    <button type="button" class="btn" id="btnBuscar" data-url="{% url 'buscar_paciente' %}">Buscar</button>
                 </div>
 
                 <div>
