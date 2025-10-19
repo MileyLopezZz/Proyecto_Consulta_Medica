@@ -315,3 +315,33 @@ document.addEventListener("DOMContentLoaded", () => {
             observer.observe(item)
     })
 })
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const dropdown = document.getElementById("portalDropdown");
+  const toggle = dropdown.querySelector(".dropdown-toggle");
+  const menu = dropdown.querySelector(".dropdown-menu");
+
+  // Abrir/cerrar el menú al hacer clic en el botón
+  toggle.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dropdown.classList.toggle("open");
+  });
+
+  // Cerrar si haces clic fuera
+  document.addEventListener("click", (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove("open");
+    }
+  });
+});
+
+// ==== Eliminar alertas automáticamente después de 3 segundos ====
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.alert').forEach(alert => alert.remove());
+  }, 3000);
+});
+
+

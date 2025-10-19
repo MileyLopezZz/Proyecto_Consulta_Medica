@@ -17,6 +17,24 @@ body {
     padding: 20px;
 }
 
+/* Contenedor de las secciones */
+.sections-container {
+    display: flex;
+    flex-direction: row; /* alineación horizontal */
+    justify-content: space-between; /* separa las secciones */
+    gap: 20px; /* espacio entre secciones */
+    flex-wrap: wrap; /* permite que se ajusten en pantallas pequeñas */
+}
+
+/* Secciones */
+section {
+    flex: 1; /* que ocupen espacio equitativamente */
+    min-width: 300px; /* ancho mínimo para mantener legibilidad */
+    padding: 20px;
+    border: 1px ;
+    box-sizing: border-box;
+}
+
 /* Enlace superior centrado */
 .volver {
     text-decoration: none;
@@ -128,6 +146,9 @@ form select {
     font-size: 0.9rem;
     margin-top: 10px;
 }
+
+
+
 
 /* === RESPONSIVE DESIGN === */
 
