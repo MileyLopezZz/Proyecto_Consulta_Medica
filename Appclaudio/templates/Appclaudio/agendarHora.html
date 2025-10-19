@@ -1,63 +1,41 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendar Hora Médica</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Agendar Cita</title>
+    <link rel="stylesheet" href="{% static 'css/agendar.css' %}">
+    <script src="{% static 'js/horarios.js' %}" defer></script>
+    <script src="{% static 'js/validaciones_agendar.js' %}" defer></script>
 </head>
 
 <body>
-    <header class="header">
-        <div class="container">
-            <a href="/" class="logo">Consulta Médica</a>
-        </div>
-    </header>
+    <main class="container">
+        <div class="card">
+            <h1>Agendar tu cita con <br><span>Doctor Constanzo</span></h1>
 
-    <main>
-        <section class="container">
-            <h1 class="section-title">Agendar tu cita con Doctor Constanzo</h1>
-            <form method="post">
+            <form id="form-agendar" method="POST">
                 {% csrf_token %}
-                <div class="date-time-container">
-                    <div class="date-picker">
-                        <label for="fecha">Selecciona una Fecha</label>
-                        <input type="date" name="fecha" id="fecha" required>
-                    </div>
-                    <div class="time-slot">
-                        <label for="hora">Horarios Disponibles</label>
-                        {% if lunes_a_jueves %}
-                            {% for horario in lunes_a_jueves %}
-                                <label>
-                                    <input type="radio" name="hora" value="{{ horario.0 }} - {{ horario.1 }}" required>
-                                    {{ horario.0 }} - {{ horario.1 }}
-                                </label><br>
-                            {% endfor %}
-                        {% endif %}
-                        {% if viernes %}
-                            {% for horario in viernes %}
-                                <label>
-                                    <input type="radio" name="hora" value="{{ horario.0 }} - {{ horario.1 }}" required>
-                                    {{ horario.0 }} - {{ horario.1 }}
-                                </label><br>
-                            {% endfor %}
-                        {% endif %}
-                        {% if not lunes_a_jueves and not viernes %}
-                            <p>No hay horarios disponibles.</p>
-                        {% endif %}
-                    </div>
+                <label>Selecciona una Fecha</label>
+                <input type="date" id="fecha" name="fecha" required>
+
+                <label>Horarios Disponibles</label>
+                <div id="mensaje-horarios" class="mensaje-horarios"></div>
+                <div class="horarios-container" id="horarios-container">
+                    <!-- Los horarios se insertarán dinámicamente -->
                 </div>
 
-                <div class="actions">
-                    <button type="submit" class="btn btn-primary">Continuar</button>
-                    <button type="button" class="btn btn-outline">Anterior</button>
+                <label>Motivo de la cita</label>
+                <textarea name="motivo" placeholder="Describe brevemente el motivo..." required></textarea>
+
+                <div class="buttons">
+                    <button type="submit" class="btn">Agendar</button>
+                    <a href="{% url 'UsuarioView' %}" class="cancel">Cancelar</a>
                 </div>
             </form>
-        </section>
+        </div>
     </main>
 </body>
-
 </html>
 

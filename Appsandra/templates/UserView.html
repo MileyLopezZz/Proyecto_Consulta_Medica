@@ -34,7 +34,7 @@
 
             <nav class="menu">
                 <a href="#" class="active">📅 Citas</a>
-                <a href="#">📄 Ficha médica</a>
+                <a href="{% url 'ficha_medica' %}">📄 Ficha médica</a>
             </nav>
         </aside>
 
@@ -44,7 +44,7 @@
             <div class="section">
                 <div class="section-header">
                     <h2>Mis Citas</h2>
-                    <a href="{% url 'agendarhora' %}" class="new-appointment">+ Agendar Nueva Cita</a>
+                    <a href="{% url 'agendar_hora' %}" class="new-appointment">+ Agendar Nueva Cita</a>
                 </div>
 
                 <div class="card citas">

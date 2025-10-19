@@ -17,12 +17,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from Apphome.views import home
+from Appsandra.views import RegisterUser,loginUser,UserView
+from Appclaudio.views import agendar_hora_view
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('appvaleria/', include('Appvaleria.urls')),
-    path('appclaudio', include('Appclaudio.urls')), 
     path('', home, name='home'),
-    path('cuenta/', include('Appsandra.urls')),
-    
+    path('registro/', RegisterUser, name='registro'),
+    path('login/', loginUser, name= 'login'),
+    path('vistaUsuario/', UserView, name= 'UsuarioView'),
+    path('agendarHora/', agendar_hora_view, name='agendar_hora'),
+    path('appvaleria/', include('Appvaleria.urls')),
+    path('appclaudio/', include('Appclaudio.urls')),
+    path('cuenta/', include('Appsandra.urls')), 
+    path('secretaria/', include('Appclaudio.urls')),
+    path('ficha/', include('Appvaleria.urls')),
+    path('login/', include('Appsandra.urls')),
 ]
