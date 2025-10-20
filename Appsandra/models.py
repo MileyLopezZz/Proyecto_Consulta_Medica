@@ -10,3 +10,7 @@ class Usuario(models.Model):
     email = models.EmailField(max_length=100, unique=True)
     password_hash = models.CharField(max_length=255)
     fecha_signup = models.DateTimeField(default=timezone.now)   #Fecha de registro
+
+
+class Cargo(models.Model):
+    nombre = models.CharField(max_length=60)

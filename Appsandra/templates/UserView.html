@@ -16,7 +16,7 @@
             <img src="{% static 'img/logoW.webp' %}" alt="logo">
         </div>
         <div class="user-controls">
-            <a href="{% url 'home' %}" class="logout-btn">⤴</a>
+            <a href="{% url 'logout' %}" class="new-appointment">Cerrar sesión ⤴</a>
         </div>
     </header>
 
@@ -35,7 +35,6 @@
             <nav class="menu">
                 <a href="#" class="active">📅 Citas</a>
                 <a href="{% url 'ficha_medica' %}">📄 Ficha médica</a>
-                <a href="#">📜 Historial</a>
             </nav>
         </aside>
 

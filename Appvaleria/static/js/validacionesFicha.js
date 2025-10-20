@@ -184,7 +184,6 @@ if ($(formId)) {
         let formIsValid = true;
         let firstInvalidField = null;
 
-        // Ejecutar todas las validaciones
         camposValidar.forEach(campo => {
             const isValid = campo.fn();
             
@@ -202,15 +201,12 @@ if ($(formId)) {
             return;
         }
         
-        // Confirmación final antes de enviar
         if (!confirm("¿Está seguro de guardar esta Ficha Médica?")) {
             ev.preventDefault(); 
             return;
         }
     });
 }
-
-// --- 6. Validación en Tiempo Real ---
 
 camposValidar.forEach(campo => {
     const inputElement = $(campo.id);

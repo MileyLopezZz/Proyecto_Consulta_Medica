@@ -1,30 +1,15 @@
 from django.db import models
-from django.contrib.auth.models import User
-
-from django.db import models
-from django.contrib.auth.models import User
-
-from django.contrib.auth.models import User
-from django.db import models
-
 
 class Paciente(models.Model):
     id_paciente = models.BigAutoField(primary_key=True)
-    rut = models.CharField(max_length=15, unique=True, verbose_name="RUT")
-    nombre = models.CharField(max_length=50, verbose_name="Nombre")
-    apellido = models.CharField(max_length=50, verbose_name="Apellido")
-    email = models.EmailField(max_length=100, verbose_name="Correo electrónico")
-    direccion = models.CharField(max_length=150, verbose_name="Dirección")
-    telefono = models.CharField(max_length=15, verbose_name="Teléfono")
-    prevision = models.CharField(max_length=100, verbose_name="Previsión")
-    usuarios_id_usuario = models.ForeignKey(
-        User,
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        verbose_name='Usuario asociado',
-        db_column='usuarios_id_usuario'  # <- Esto evita que Django agregue _id
-    )
+    rut = models.CharField(max_length=15, unique=True, verbose_name="RUT", blank=True)
+    nombre = models.CharField(max_length=50, verbose_name="Nombre", blank=True)
+    apellido = models.CharField(max_length=50, verbose_name="Apellido", blank=True)
+    email = models.EmailField(max_length=100, verbose_name="Correo electrónico", blank=True)
+    direccion = models.CharField(max_length=150, verbose_name="Dirección", blank=True)
+    telefono = models.CharField(max_length=15, verbose_name="Teléfono", blank=True)
+    prevision = models.CharField(max_length=100, verbose_name="Previsión", blank=True)
+    usuarios_id_usuario = models.IntegerField(null=True, blank=True, verbose_name="ID del usuario (opcional)")
 
     class Meta:
         db_table = 'pacientes'
@@ -34,9 +19,6 @@ class Paciente(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellido} ({self.rut})"
-
-
-
 
 
 class FichaMedica(models.Model):

@@ -34,35 +34,50 @@ def loginUser(request):
                     #guarda los datos ensesion (se crea una cookie de sesion)
                     request.session['usuario_id'] = usuario.id
                     request.session['usuario_nombre'] = usuario.nombre
-                    messages.success(request,"Inicio sesión con exito")
+
+                    # Limpia mensajes anteriores
+                    storage = messages.get_messages(request)
+                    for _ in storage:
+                        pass  #vacía los mensajes pendientes
+                    
+                    messages.success(request,"Inicio secion con exito")
                     return redirect('UsuarioView') # redirije a la vista de usuario.
                 else:
-                    messages.error(request, "Contraseña incorrecta ❌")
+                    messages.error(request, "Contraseña incorrecta")
             except Usuario.DoesNotExist:
-                messages.error(request, "El usuario es Incorrecto ❌")
+                messages.error(request, "El correo es Incorrecto")
     else:
         form = LoginForm()
-
-    
     return render(request, 'Login.html', {'form' : form})
 
 
 
-"""def UserView(request):
-    return render(request, 'UserView.html')"""
+def logoutUser(request):
+
+    # limpia mensajes anteriores
+    storage = messages.get_messages(request)
+    for _ in storage:
+        pass
+
+    # Elimina todos los datos de sesión del usuario
+    request.session.flush()
+    messages.success(request, "Has cerrado sesión correctamente")
+    return redirect('home')  # Redirige al login
+
+
 
 def UserView(request):
     #Recuperar el ID del usuario desde la sesión
     usuario_id = request.session.get('usuario_id')
 
-    # 3️⃣ Buscar al usuario en la base de datos
+    #Buscar al usuario en la base de datos
     try:
         usuario = Usuario.objects.get(id=usuario_id)
     except Usuario.DoesNotExist:
         messages.error(request, "El usuario no existe ❌")
         return redirect('login')
 
-    # 4️⃣ Pasar el usuario al template
+    #Pasar el usuario al template
     data = {
         'usuario': usuario
     }
