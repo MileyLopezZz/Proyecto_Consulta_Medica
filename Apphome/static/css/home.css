@@ -1,7 +1,7 @@
 /* Importar fuentes de Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap");
 
- 
+
 :root {
   /* Colores principales  */
   --background: rgb(252, 251, 250); /* oklch(0.99 0.005 85) */
@@ -746,6 +746,114 @@ body {
   color: var(--muted-foreground);
   font-size: 0.875rem;
 }
+
+/* === Dropdown limpio === */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background-color: transparent;
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+  background-color: var(--secondary);
+}
+
+/* Menú */
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  min-width: 180px;
+  display: none;
+  flex-direction: column;
+  animation: fadeIn 0.2s ease-in-out;
+  z-index: 1000;
+}
+
+/* Enlaces del menú */
+.dropdown-menu a {
+  text-decoration: none;
+  color: var(--foreground);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  display: block;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: var(--secondary);
+}
+
+/* Mostrar al activar */
+.dropdown.open .dropdown-menu {
+  display: flex;
+}
+
+/* === Notificaciones tipo toast === */
+.messages {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  z-index: 9999;
+}
+
+/* Estilo base de cada alerta */
+.alert {
+  background-color: #4CAF50; /* verde para éxito */
+  color: white;
+  padding: 14px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  margin-bottom: 10px;
+  opacity: 0.95;
+  transition: all 0.5s ease;
+  animation: fadeOut 0.5s ease 2.5s forwards;
+}
+
+/* Tipos de alerta */
+.alert.error {
+  background-color: #f44336; /* rojo */
+}
+
+.alert.warning {
+  background-color: #ff9800; /* naranja */
+}
+
+.alert.info {
+  background-color: #2196f3; /* azul */
+}
+
+/* Animación para desaparecer */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 /* Responsive Design */
 @media (max-width: 1024px) {

@@ -5,21 +5,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro Usuario</title>
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
 </head>
 <body>
     <div class="container">
         <a href="{% url 'home' %}" class="volver">&larr; Volver al inicio</a>
-
+        
         <div class="registro-box">
-            <h1>Crear Cuenta</h1>
+            <h1>Crear tu Cuenta</h1>
             <p class="subtitulo">Regístrate para acceder a tu portal médico personal</p>
 
-            <form method="post">
+
+            <!--formulario de registro-->
+            <form method="POST" novalidate>
                 {% csrf_token %}
-                {{ form.as_p }}
+
+                <div class="form-group">
+                    {{ form.nombre.label_tag }}
+                    {{ form.nombre }}
+                    {% for error in form.nombre.errors %}
+                        <small class="error" style="color:red; font-size:14px;">{{ error }}</small>
+                    {% endfor %}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.apellido.label_tag }}
+                    {{ form.apellido }}
+                    {% for error in form.apellido.errors %}
+                        <small class="error" style="color:red; font-size:14px;">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {% for error in form.email.errors %}
+                        <small class="error" style="color:red; font-size:14px;">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password.label_tag }}
+                    {{ form.password }}
+                    {% for error in form.password.errors %}
+                        <small class="error" style="color:red; font-size:14px;">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.confirmar_password.label_tag }}
+                    {{ form.confirmar_password }}
+                    {% for error in form.confirmar_password.errors %}
+                        <small class="error" style="color:red; font-size:14px;">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="alert">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                {% endif %}
+
                 <button type="submit" class="btn">Registrarse</button>
+
             </form>
+
 
             <div class="divider">o</div>
 
@@ -28,10 +81,14 @@
                 <a href="{% url 'login' %}">Inicia sesión aquí</a>
             </p>
 
+
             {% for message in messages %}
                 <p class="mensaje">{{ message }}</p>
             {% endfor %}
+
         </div>
     </div>
+
+    
 </body>
 </html>
