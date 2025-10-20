@@ -1,0 +1,110 @@
+15 de octubre – Integración inicial de módulos y migraciones
+
+Objetivo: integrar las tablas existentes con el ORM de Django y lograr migraciones estables.
+
+Actividades realizadas:
+
+Se revisó la estructura SQL original (clinica.sql) y se adaptó a modelos Django (models.py).
+
+Se eliminaron tablas del sistema Django que generaban conflictos (django_content_type, auth_*, migrations, etc.).
+
+Se aplicaron correcciones en las migraciones para evitar errores de duplicación:
+
+Uso de --fake y --fake-initial para sincronizar migraciones sin recrear tablas.
+
+Resolución del error recurrente Table 'appclaudio_horaagendada' already exists.
+
+Ajuste manual de valores DEFAULT y claves foráneas en MySQL (caso del campo name en django_content_type).
+
+Validación de integridad referencial y comprobación del correcto enlace entre las tablas pacientes, secretaria y hora_agendada.
+
+Resultado:
+Las migraciones quedaron sincronizadas exitosamente con la base de datos existente, permitiendo continuar con la fase de conexión entre vistas y modelos.
+
+
+16 de octubre – Integración de vistas de usuario y rutas
+
+Objetivo: crear la navegación entre el panel del usuario y la vista de agenda de horas.
+
+Actividades realizadas:
+
+Implementación de la vista UserView en Appsandra/views.py, que recupera los datos del usuario desde la sesión y los muestra en UserView.html.
+
+Conexión del template del paciente con las rutas definidas en urls.py (navegación desde vistaUsuario a agendarHora).
+
+Ajuste del sistema de autenticación para mantener la sesión (request.session).
+
+Corrección del error NoReverseMatch originado por el enlace href="{% url 'ficha' %}", reemplazado por rutas válidas según el urls.py.
+
+Se añadió el botón “Agendar nueva cita” con vínculo funcional al módulo de agendamiento (agendarHora).
+
+Resultado:
+Los usuarios pueden acceder a su panel y abrir la vista de agendamiento correctamente, manteniendo la sesión iniciada.
+
+
+17 de octubre – Diseño de la vista de agendamiento y manejo de errores
+
+Objetivo: desarrollar el flujo completo de agendamiento de citas y corregir errores de rutas.
+
+Actividades realizadas:
+
+Creación del template agendarHora.html con estilos y estructura coherentes al resto del sistema.
+
+Implementación de la vista agendar_hora_view en Appclaudio/views.py.
+
+Corrección de errores de enrutamiento (NoReverseMatch at /agendarHora/), agregando rutas faltantes en Appclaudio/urls.py.
+
+Implementación de redirecciones funcionales hacia UsuarioView y posteriormente hacia confirmacionHora.
+
+Diseño inicial del template de confirmación de cita (confirmacionHora.html).
+
+Ajustes en las clases CSS para alinear los formularios y los botones del formulario de agendamiento.
+
+Resultado:
+El formulario de agendamiento se visualiza correctamente, los datos se envían sin errores y el sistema puede redirigir a una pantalla de confirmación.
+
+18 de octubre – Validaciones, interfaz interactiva y corrección de horarios
+
+Objetivo: mejorar la experiencia del usuario mediante validaciones y selección dinámica de horarios.
+
+Actividades realizadas:
+
+Implementación del archivo horarios.js para gestionar las horas disponibles según el día seleccionado:
+
+Se bloquean las fechas pasadas en el calendario (min = hoy).
+
+Se definen horarios dinámicos:
+
+Lunes a jueves: 09:00–16:30
+
+Viernes: 09:00–12:00
+
+Sábados y domingos: no disponibles.
+
+Se agrega un mensaje de advertencia cuando no hay horarios válidos.
+
+Corrección de un desfase por zona horaria (UTC), que causaba que los lunes se detectaran como fines de semana.
+
+Mejora visual del sistema de selección de horas:
+
+Cada hora se muestra como botón dinámico.
+
+Al seleccionarse, el botón cambia de color para indicar la elección.
+
+Integración de mensajes de validación visuales para días no hábiles y sin selección de hora.
+
+Ajuste final en la vista agendar_hora_view para eliminar el cálculo de hora final de la consulta (ahora solo se registra hora de inicio).
+
+Resultado:
+El agendador funciona de forma completamente interactiva y visual, con validaciones de calendario y horario en tiempo real.
+El sistema impide agendar citas en días pasados o fines de semana y muestra confirmación tras completar la reserva.
+
+Conclusiones
+
+Se consolidó un flujo completo: inicio de sesión → panel de usuario → agendar cita → confirmación.
+
+Se eliminaron todos los errores de migración (IntegrityError, OperationalError, NoReverseMatch).
+
+Se incorporaron validaciones y una interfaz dinámica que mejora la usabilidad.
+
+La estructura final mantiene coherencia estética, funcional y modular (vistas separadas por aplicación).
