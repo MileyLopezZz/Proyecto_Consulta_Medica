@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
+    <!-- Botón regresar al menú -->
+    <a href="{% url 'menu_doctor' %}" class="btn-volver">← Volver al Menú Doctor</a>
+
     <div class="container">
         <h1>Ficha Médica</h1>
 
@@ -17,10 +20,7 @@
 
         <form id="formFicha" method="post" novalidate>
             {% csrf_token %}
-
             <div class="grid">
-
-                <!-- Campo RUT Paciente -->
                 <div class="full">
                     {{ form.rut_paciente.label_tag }}
                     {{ form.rut_paciente }}

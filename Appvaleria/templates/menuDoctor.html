@@ -6,12 +6,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú Doctor | Dr. Constanzo</title>
-    <!-- Referencias a CSS externo se mantienen -->
     <link rel="stylesheet" href="{% static 'css/styled.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+    
+    <style>
+        html { 
+            scroll-behavior: smooth; 
+        }
+    </style>
 </head>
 <body>
-    <!--Header (Simplificado, sin botones de autenticación)-->  
     <header class="main-header">
         <nav class="navbar container">
             <div class="logo">
@@ -23,8 +27,7 @@
             </ul>
 
             <div class="nav-actions">
-                <!-- Acciones de navegación eliminadas para el modo sin credenciales -->
-            </div>
+                </div>
 
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <span></span>
@@ -34,19 +37,16 @@
         </nav>
     </header>
 
-    <!--Contenido principal: Dashboard del Doctor--> 
     <main class="doctor-dashboard-layout">
         <div class="container doctor-dashboard-container">
             
-            <!-- 1. BARRA LATERAL (MENU DEL DOCTOR) -->
             <aside class="sidebar doctor-sidebar">
             <div class="logo-area">
                 <div class="logo-initials">
-                    <img src="{% static 'img/Foto perfil.png' %}" alt="Foto del Doctor">
+                    <img src="{% static 'img/Foto perfil.png' %}" alt="Foto del Doctor"> 
                  </div>
             </div>
                 
-                <!-- Datos Estáticos del Doctor Martínez -->
                 <div class="doctor-info-card">
                     <h2>{{ doctor.full_name }}</h2>
                     <p class="experience-years">{{ doctor.experience }}</p>
@@ -65,31 +65,27 @@
                 </div>
                 
                 <nav class="doctor-nav-menu">
-                    <!-- Enlaces a las vistas del doctor -->
-                    <a href="{% url 'menu_doctor' %}" class="nav-item active">
+                    <a href="#seccion-agenda" class="nav-item active"> 
                         <i class="fas fa-calendar-alt"></i> Agenda
                     </a>
-                    <a href="{% url 'paciente' %}" class="nav-item">
+                    <a href="#seccion-pacientes" class="nav-item"> 
                         <i class="fas fa-user-friends"></i> Pacientes
                     </a>
-                    <a href="{% url 'ficha_medica' %}" class="nav-item">
+                    <a href="#seccion-fichas" class="nav-item"> 
                         <i class="fas fa-file-alt"></i> Fichas Médicas
                     </a>
                 </nav>
             </aside>
 
-            <!-- 2. CONTENIDO PRINCIPAL -->
             <section class="main-content doctor-content">
                 
-                <!-- SALUDO Y RESUMEN -->
-                <div class="welcome-header">
+                <div class="welcome-header" id="seccion-agenda">
                     <h1>Buenos días, {{ doctor.greeting }}</h1>
                     <p>Tienes <span class="highlight-number">{{ num_citas }}</span> citas programadas para hoy.</p>
                 </div>
 
                 <hr class="section-divider">
 
-                <!-- AGENDA DE HOY -->
                 <div class="agenda-section">
                     <h2>Agenda de Hoy</h2>
                     
@@ -109,7 +105,7 @@
                             {% else %}
                                 <span class="btn btn-pendiente">Pendiente</span>
                             {% endif %}
-                            <a href="{% url 'paciente' %}" class="btn btn-outline">Ver Paciente</a>
+                            <a href="{% url 'paciente' %}" class="btn btn-outline">Ver Paciente</a> 
                         </div>
                     </article>
                     {% endfor %}
@@ -117,21 +113,17 @@
 
                 <hr class="section-divider">
 
-                <!-- SECCIÓN FICHA MÉDICA (CRUD - LISTADO) -->
-                <div class="recetas-section">
+                <div class="recetas-section" id="seccion-fichas"> 
                     <header class="section-header-recetas">
                         <h2>Gestión de Fichas Médicas</h2>
-                        <!-- Botón que REDIRECCIONA a la plantilla de creación de ficha médica -->
                         <a href="{% url 'ficha_medica' %}" class="btn btn-primary btn-nueva-receta">
                             <i class="fas fa-plus"></i> Crear Nueva Ficha
                         </a>
                     </header>
                     
-                    <!-- Tabla de Fichas Médicas Existentes (simulación de CRUD) -->
                     <div class="recetas-list-card card-shadow">
                         <p style="margin-bottom: 20px; color: #555;">Aquí puede revisar, editar y eliminar fichas médicas existentes.</p>
                         
-                        <!-- Estructura de la Tabla/Grid -->
                         <div class="recetas-table-grid">
                             <div class="table-header" style="display: grid; grid-template-columns: 2fr 2fr 1.5fr 1fr; font-weight: bold; padding: 10px 0; border-bottom: 2px solid #ddd; background-color: #f7f7f7;">
                                 <span>Paciente</span>
@@ -146,7 +138,6 @@
                                 <span style="font-style: italic;">{{ ficha.diagnostico }}</span>
                                 <span>{{ ficha.fecha }}</span>
                                 <span class="action-buttons">
-                                    <!-- Botones CRUD -->
                                     <button class="action-btn view-btn" title="Ver Detalle"><i class="fas fa-eye"></i></button>
                                     <button class="action-btn edit-btn" title="Editar Ficha"><i class="fas fa-edit"></i></button>
                                     <button class="action-btn delete-btn" title="Eliminar Ficha"><i class="fas fa-trash-alt"></i></button>
@@ -161,17 +152,14 @@
 
                 <hr class="section-divider">
 
-                <!-- MIS PACIENTES -->
-                <div class="pacientes-section">
+                <div class="pacientes-section" id="seccion-pacientes">
                     <h2>Buscar Pacientes</h2>
                     
-                    <!-- Barra de Búsqueda de Pacientes -->
                     <div class="search-bar">
                         <input type="text" placeholder="Buscar paciente..." class="patient-search-input">
                         <i class="fas fa-search"></i>
                     </div>
 
-                    <!-- Botón para ir a la vista completa de pacientes -->
                     <a href="{% url 'paciente' %}" class="btn btn-primary">
                         <i class="fas fa-list"></i> Ver Lista Completa de Pacientes
                     </a>
@@ -182,10 +170,9 @@
         </div>
     </main>
 
-    <!--Footer--> 
     <footer class="main-footer">
         <div class="footer-bottom">
-            <p>&copy; 2025 Clínica. Todos los derechos reservados.</p>
+            <p>© 2025 Clínica. Todos los derechos reservados.</p>
         </div>
     </footer>
 

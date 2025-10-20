@@ -1,11 +1,11 @@
 :root {
-    --color-fondo: #FDFBF8;     /* Fondo general de la página */
-    --color-crema-medico: #F7F4EF; /* Fondo de la tarjeta (card) */
-    --color-arena-medica: #EFEAE2; /* Bordes sutiles y separaciones */
-    --color-calido-medico: #E8DFD7; /* Posible color de inputs deshabilitados */
-    --color-primario: #262016; /* Texto principal y botones de acción */
-    --color-texto-claro: #494949; /* Texto secundario (labels, placeholders) */
-    --color-error: #D8000C; /* Color para mensajes de error */
+    --color-fondo: #FDFBF8;     
+    --color-crema-medico: #F7F4EF; 
+    --color-arena-medica: #EFEAE2; 
+    --color-calido-medico: #E8DFD7; 
+    --color-primario: #262016; 
+    --color-texto-claro: #494949; 
+    --color-error: #D8000C; 
 }
 
 body {
@@ -16,7 +16,7 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centra el contenido horizontalmente */
+    align-items: center;
     min-height: 100vh;
 }
 
@@ -28,7 +28,6 @@ h1 {
 }
 
 .container {
-    /* Tu contenedor actúa como la tarjeta (card-container) */
     width: 100%;
     max-width: 500px;
     padding: 30px 40px;
@@ -37,17 +36,14 @@ h1 {
     border-radius: 8px;
 }
 
-/* El bloque form no necesita mucho estilo, solo asegurar el margen */
 #formFicha {
     margin-top: 20px;
 }
 
-/* Contenedor principal para los campos (tu clase .grid) */
 .grid > div > div {
     margin-bottom: 20px;
 }
 
-/* Los campos .full no necesitan ajustes extra, usan el 100% por defecto */
 label {
     display: block;
     margin-bottom: 5px;
@@ -56,7 +52,6 @@ label {
     font-size: 0.9em;
 }
 
-/* Estilo general para todos los inputs, select y textareas */
 input[type="text"], 
 input[type="time"],
 textarea,
@@ -72,7 +67,6 @@ select {
     transition: border-color 0.2s;
 }
 
-/* Inputs de solo lectura o deshabilitados */
 input[readonly] {
     background-color: var(--color-calido-medico);
 }
@@ -85,23 +79,18 @@ select:focus {
     box-shadow: 0 0 0 1px var(--color-primario);
 }
 
-/* Contenedor para el RUT y el botón (div.full dentro de .grid) */
 .grid > .full:first-child {
     display: flex;
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
-    align-items: flex-end; /* Alinea verticalmente el input y el botón */
-    gap: 10px; /* Espacio entre el input y el botón */
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px;
 }
 
-/* Ajuste para el input de RUT dentro de ese contenedor */
 .grid > .full:first-child > input {
-    flex-grow: 1; /* Ocupa el espacio restante */
-    margin-bottom: 0; /* Elimina el margen si el label está encima */
-    /* El input ya tiene un margen-bottom implícito por el label_tag de Django, 
-       pero lo dejamos a flex-grow 1 para que ocupe el espacio */
+    flex-grow: 1;
+    margin-bottom: 0;
 }
 
-/* Botón Buscar */
 #btnBuscar {
     padding: 10px 15px;
     background-color: var(--color-arena-medica);
@@ -124,7 +113,7 @@ select:focus {
     padding: 12px;
     margin-top: 30px;
     background-color: var(--color-primario);
-    color: var(--color-fondo); /* Color de fondo muy claro para el texto */
+    color: var(--color-fondo);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -134,7 +123,7 @@ select:focus {
 }
 
 .btn[type="submit"]:hover {
-    background-color: #403422; /* Tono un poco más claro para hover */
+    background-color: #403422;
 }
 
 .error {
@@ -170,4 +159,26 @@ select:focus {
 
 .success-msg {
     color: #28a745; 
+}
+
+/* ========================= */
+/* Botón fijo volver al menú */
+/* ========================= */
+.btn-volver {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 16px;
+    background-color: var(--color-primario);
+    color: var(--color-fondo);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: background-color 0.2s;
+}
+
+.btn-volver:hover {
+    background-color: #403422;
 }

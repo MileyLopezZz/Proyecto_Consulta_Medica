@@ -6,7 +6,7 @@ class FichaMedicaForm(forms.ModelForm):
     rut_paciente = forms.CharField(
         label='RUT Paciente',
         max_length=15,
-        required=True,
+        required=False,
         widget=forms.TextInput(attrs={
             'placeholder': 'Ingrese RUT del paciente',
             'class': 'form-control'
@@ -43,6 +43,7 @@ class FichaMedicaForm(forms.ModelForm):
         }
 
 
+
 class PacienteForm(forms.ModelForm):
     class Meta:
         model = Paciente
@@ -59,13 +60,13 @@ class PacienteForm(forms.ModelForm):
             'prevision': 'Previsión',
         }
         widgets = {
-            'rut': forms.TextInput(attrs={'placeholder': 'Ingrese RUT', 'class': 'form-control', 'required': False}),
-            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese nombre', 'class': 'form-control', 'required': False}),
-            'apellido': forms.TextInput(attrs={'placeholder': 'Ingrese apellido', 'class': 'form-control', 'required': False}),
-            'email': forms.EmailInput(attrs={'placeholder': 'Ingrese correo', 'class': 'form-control', 'required': False}),
-            'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese dirección', 'class': 'form-control', 'required': False}),
-            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese teléfono', 'class': 'form-control', 'required': False}),
-            'prevision': forms.TextInput(attrs={'placeholder': 'Ej: Fonasa, Isapre...', 'class': 'form-control', 'required': False}),
+            'rut': forms.TextInput(attrs={'placeholder': 'Ingrese RUT', 'class': 'form-control'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Ingrese nombre', 'class': 'form-control'}),
+            'apellido': forms.TextInput(attrs={'placeholder': 'Ingrese apellido', 'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Ingrese correo', 'class': 'form-control'}),
+            'direccion': forms.TextInput(attrs={'placeholder': 'Ingrese dirección', 'class': 'form-control'}),
+            'telefono': forms.TextInput(attrs={'placeholder': 'Ingrese teléfono', 'class': 'form-control'}),
+            'prevision': forms.TextInput(attrs={'placeholder': 'Ej: Fonasa, Isapre...', 'class': 'form-control'}),
         }
 
     def clean_rut(self):
@@ -73,4 +74,5 @@ class PacienteForm(forms.ModelForm):
         if Paciente.objects.filter(rut=rut).exclude(id_paciente=self.instance.id_paciente).exists():
             raise forms.ValidationError("Ya existe un paciente con este RUT.")
         return rut
+
 

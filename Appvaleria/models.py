@@ -2,13 +2,13 @@ from django.db import models
 
 class Paciente(models.Model):
     id_paciente = models.BigAutoField(primary_key=True)
-    rut = models.CharField(max_length=15, unique=True, verbose_name="RUT")
-    nombre = models.CharField(max_length=50, verbose_name="Nombre")
-    apellido = models.CharField(max_length=50, verbose_name="Apellido")
-    email = models.EmailField(max_length=100, verbose_name="Correo electrónico")
-    direccion = models.CharField(max_length=150, verbose_name="Dirección")
-    telefono = models.CharField(max_length=15, verbose_name="Teléfono")
-    prevision = models.CharField(max_length=100, verbose_name="Previsión")
+    rut = models.CharField(max_length=15, unique=True, verbose_name="RUT", blank=True)
+    nombre = models.CharField(max_length=50, verbose_name="Nombre", blank=True)
+    apellido = models.CharField(max_length=50, verbose_name="Apellido", blank=True)
+    email = models.EmailField(max_length=100, verbose_name="Correo electrónico", blank=True)
+    direccion = models.CharField(max_length=150, verbose_name="Dirección", blank=True)
+    telefono = models.CharField(max_length=15, verbose_name="Teléfono", blank=True)
+    prevision = models.CharField(max_length=100, verbose_name="Previsión", blank=True)
     usuarios_id_usuario = models.IntegerField(null=True, blank=True, verbose_name="ID del usuario (opcional)")
 
     class Meta:
