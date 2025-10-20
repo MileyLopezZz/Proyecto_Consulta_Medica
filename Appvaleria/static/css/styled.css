@@ -1,0 +1,498 @@
+:root {
+    --color-fondo: #FDFBF8;         /* Fondo general de la página */
+    --color-crema-medico: #F7F4EF;  /* Fondo de la tarjeta (card) */
+    --color-arena-medica: #EFEAE2;  /* Bordes sutiles y separaciones */
+    --color-calido-medico: #E8DFD7; /* Fondo hover de botones y nav-items */
+    --color-primario: #262016;       /* Texto principal y botones de acción */
+    --color-texto-claro: #494949;   /* Texto secundario (labels, placeholders) */
+    --color-acento: #A58A54;         /* Color para destacar elementos (íconos, números) */
+    --color-error: #D8000C;         /* Color para mensajes de error */
+    --color-shadow: rgba(38, 32, 22, 0.08); /* Sombra sutil basada en el primario */
+
+    /* Nuevos colores para acciones CRUD */
+    --color-accion-ver: #4A90E2;    /* Azul para Ver/Detalle */
+    --color-accion-editar: #F5A623; /* Naranja para Editar */
+    --color-accion-eliminar: #D0021B; /* Rojo para Eliminar */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-primario);
+    line-height: 1.6;
+}
+
+.container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primario);
+    transition: color 0.2s;
+}
+
+.main-header {
+    background-color: var(--color-crema-medico);
+    border-bottom: 1px solid var(--color-arena-medica);
+    padding: 15px 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primario);
+}
+
+.nav-menu li {
+    display: inline-block;
+    list-style: none;
+}
+
+.nav-menu a {
+    padding: 8px 15px;
+    font-weight: 500;
+    border-radius: 6px;
+}
+
+.nav-menu a:hover {
+    background-color: var(--color-calido-medico);
+}
+
+.mobile-menu-btn {
+    display: none;
+}
+
+.doctor-dashboard-layout {
+    padding: 30px 0;
+}
+
+.doctor-dashboard-container {
+    display: grid;
+    grid-template-columns: 300px 1fr; /* Barra lateral más ancha */
+    gap: 40px;
+}
+
+.doctor-sidebar {
+    background-color: var(--color-crema-medico);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 8px 20px var(--color-shadow);
+    position: sticky;
+    top: 30px;
+    height: fit-content;
+    border: 1px solid var(--color-arena-medica);
+}
+
+.logo-area {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.logo-initials {
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    overflow: hidden; 
+    background-color: var(--color-arena-medica);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem; 
+    font-weight: bold;
+    color: var(--color-primario); /* Color de las iniciales */
+    box-shadow: 0 0 0 5px var(--color-arena-medica), /* Borde sutil */
+                0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para resaltar */
+}
+
+.logo-initials img {
+    width: 100%; /* La imagen ocupa todo el ancho */
+    height: 100%; /* La imagen ocupa todo el alto */
+    object-fit: cover; /* Escala la imagen para cubrir el área, recortando si es necesario */
+    display: block; /* Elimina cualquier espacio extra */
+}
+
+
+.doctor-info-card {
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--color-arena-medica);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.doctor-info-card h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.experience-years {
+    font-size: 0.9rem;
+    color: var(--color-texto-claro);
+    margin-bottom: 20px;
+}
+
+.contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: var(--color-texto-claro);
+    margin-top: 10px;
+}
+
+.contact-detail i {
+    color: var(--color-acento);
+    width: 20px;
+    text-align: center;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    margin: 8px 0;
+    border-radius: 8px;
+    font-weight: 500;
+    color: var(--color-primario);
+    transition: background-color 0.2s, border-left 0.2s;
+}
+
+.nav-item i {
+    margin-right: 12px;
+    font-size: 1.1rem;
+}
+
+.nav-item:hover {
+    background-color: var(--color-calido-medico);
+}
+
+.nav-item.active {
+    background-color: var(--color-primario);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-content {
+    padding: 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px var(--color-shadow);
+    border: 1px solid var(--color-arena-medica);
+}
+
+.welcome-header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.welcome-header p {
+    font-size: 1.1rem;
+    color: var(--color-texto-claro);
+}
+
+.highlight-number {
+    font-weight: 700;
+    color: var(--color-acento);
+    font-size: 1.2rem;
+}
+
+.section-divider {
+    border: 0;
+    height: 1px;
+    background-color: var(--color-arena-medica);
+    margin: 35px 0;
+}
+
+.agenda-section h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.appointment-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 25px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    background-color: var(--color-crema-medico);
+    border-left: 5px solid var(--color-acento);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.appointment-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-details h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.consult-type {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--color-acento);
+}
+
+.consult-info, .consult-reason {
+    font-size: 0.9rem;
+    color: var(--color-texto-claro);
+    margin-top: 5px;
+}
+
+.appointment-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Botones de acción */
+.btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    font-size: 0.95rem;
+    transition: opacity 0.2s, background-color 0.2s, color 0.2s;
+}
+.btn:hover { opacity: 0.9; }
+
+.btn-confirmar { background-color: #5cb85c; color: white; } /* Verde para Confirmado */
+.btn-reprogramar { background-color: #f0ad4e; color: var(--color-primario); } /* Amarillo para Reprogramar */
+.btn-pendiente { background-color: var(--color-calido-medico); color: var(--color-texto-claro); } /* Color neutro para Pendiente */
+.btn-outline { 
+    background-color: transparent; 
+    border: 1px solid var(--color-primario); 
+    color: var(--color-primario); 
+}
+.btn-outline:hover { 
+    background-color: var(--color-primario); 
+    color: white; 
+}
+
+.section-header-recetas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.recetas-section h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.btn-nueva-receta {
+    background-color: var(--color-primario);
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+.recetas-list-card {
+    background-color: var(--color-crema-medico);
+    border: 1px solid var(--color-arena-medica);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    overflow-x: auto; /* Permite scroll horizontal en móvil si es necesario */
+}
+
+.recetas-table-grid {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.95rem;
+    width: 100%;
+    min-width: 600px; /* Asegura un ancho mínimo en pantallas pequeñas */
+}
+
+/* Estilo del encabezado de la tabla */
+.recetas-table-grid .table-header {
+    background-color: var(--color-calido-medico) !important;
+    border-bottom: 2px solid var(--color-acento) !important;
+    color: var(--color-primario);
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 0 !important;
+}
+
+/* Estilo de cada fila */
+.recetas-table-grid .table-row {
+    transition: background-color 0.2s;
+}
+
+.recetas-table-grid .table-row:hover {
+    background-color: var(--color-arena-medica);
+}
+
+.recetas-table-grid span {
+    padding: 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    align-self: center;
+}
+
+.recetas-table-grid .table-row .action-buttons {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-start;
+}
+
+/* Botones de acción dentro de la tabla */
+.action-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.action-btn:hover {
+    background-color: var(--color-arena-medica);
+}
+
+.view-btn { color: var(--color-accion-ver); }
+.edit-btn { color: var(--color-accion-editar); }
+.delete-btn { color: var(--color-accion-eliminar); }
+
+/* (Sección de formulario anterior, se mantiene por si se reutiliza en otra vista) */
+.receta-form-card {
+    background-color: var(--color-crema-medico);
+    border: 1px solid var(--color-arena-medica);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: none; /* Ocultar si ya no se usa aquí */
+}
+
+.pacientes-section h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-arena-medica);
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    background-color: white;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.patient-search-input {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    flex-grow: 1;
+    font-size: 1rem;
+    color: var(--color-primario);
+}
+
+.search-bar i {
+    color: var(--color-texto-claro);
+}
+
+.main-footer {
+    background-color: white;
+    border-top: 1px solid var(--color-arena-medica);
+    padding: 20px 0;
+    text-align: center;
+}
+.footer-bottom p {
+    color: var(--color-texto-claro);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 1024px) {
+    .doctor-dashboard-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .doctor-sidebar {
+        position: static;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-wrap: wrap;
+    }
+    .nav-menu {
+        display: none;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .nav-menu li {
+        display: block;
+    }
+    .nav-menu a {
+        display: block;
+        margin: 5px 0;
+    }
+    
+    .doctor-content {
+        padding: 20px;
+    }
+
+    .appointment-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+    .appointment-details {
+        margin-bottom: 10px;
+    }
+    .appointment-actions {
+        width: 100%;
+        justify-content: space-around;
+        gap: 5px;
+    }
+    .btn {
+        flex-grow: 1;
+    }
+
+    .recetas-table-grid {
+        min-width: 100%; /* Eliminar min-width si es necesario, o mantenerlo para forzar scroll */
+        display: block;
+    }
+    .recetas-table-grid .table-header,
+    .recetas-table-grid .table-row {
+        display: none !important; /* Ocultar la estructura Grid para usar un estilo de tarjeta vertical en móvil */
+    }
+    .recetas-table-grid .table-header {
+        display: none;
+    }  
+}
