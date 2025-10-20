@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from .forms import FichaMedicaForm, PacienteForm
 from .models import Paciente, FichaMedica
 from django.contrib.auth.models import AnonymousUser
+from django.contrib import messages
 
 
 # --------------------- FICHA MÉDICA ---------------------
@@ -136,3 +137,22 @@ def menu_doctor(request):
     }
     
     return render(request, 'menuDoctor.html', context)
+
+
+def login_doctor(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        #Credenciales fijas del doctor
+        correo_doctor = "doctor@gmail.com"
+        clave_doctor = "doctor1234"
+
+        if email == correo_doctor and password == clave_doctor:
+            messages.success(request, "Bienvenido doctor.")
+            # Redirige al panel o vista especial del doctor
+            return redirect('menu_doctor')
+        else:
+            messages.error(request, "Correo o contraseña incorrectos.")
+
+    return render(request, 'loginDoctor.html')
