@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Pacientes</title>
-    <!-- Estilos -->
     <link rel="stylesheet" href="{% static 'css/stylep.css' %}">
 </head>
 
@@ -21,67 +20,63 @@
             {% csrf_token %}
 
             <div class="row g-3">
-                <!-- RUT -->
                 <div class="col-md-6">
                     <label for="{{ form.rut.id_for_label }}" class="form-label">{{ form.rut.label }}</label>
                     {{ form.rut }}
+                    <div id="msg_id_rut" class="feedback-msg"></div>
                     {% for error in form.rut.errors %}
                         <div class="text-danger small">{{ error }}</div>
                     {% endfor %}
                 </div>
-
-                <!-- Nombre -->
                 <div class="col-md-6">
                     <label for="{{ form.nombre.id_for_label }}" class="form-label">{{ form.nombre.label }}</label>
                     {{ form.nombre }}
+                    <div id="msg_id_nombre" class="feedback-msg"></div>
                     {% for error in form.nombre.errors %}
                         <div class="text-danger small">{{ error }}</div>
                     {% endfor %}
                 </div>
-
-                <!-- Apellido -->
                 <div class="col-md-6">
                     <label for="{{ form.apellido.id_for_label }}" class="form-label">{{ form.apellido.label }}</label>
                     {{ form.apellido }}
+                    <div id="msg_id_apellido" class="feedback-msg"></div>
                     {% for error in form.apellido.errors %}
                         <div class="text-danger small">{{ error }}</div>
                     {% endfor %}
                 </div>
-
-                <!-- Email -->
                 <div class="col-md-6">
                     <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
                     {{ form.email }}
+                    <div id="msg_id_email" class="feedback-msg"></div>
                     {% for error in form.email.errors %}
                         <div class="text-danger small">{{ error }}</div>
                     {% endfor %}
                 </div>
-
-                <!-- Dirección -->
                 <div class="col-12">
                     <label for="{{ form.direccion.id_for_label }}" class="form-label">{{ form.direccion.label }}</label>
                     {{ form.direccion }}
+                    <div id="msg_id_direccion" class="feedback-msg"></div>
                     {% for error in form.direccion.errors %}
                         <div class="text-danger small">{{ error }}</div>
                     {% endfor %}
                 </div>
-
-                <!-- Teléfono -->
                 <div class="col-md-6">
                     <label for="{{ form.telefono.id_for_label }}" class="form-label">{{ form.telefono.label }}</label>
                     {{ form.telefono }}
+                    <div id="msg_id_telefono" class="feedback-msg"></div>
                     {% for error in form.telefono.errors %}
                         <div class="text-danger small">{{ error }}</div>
                     {% endfor %}
                 </div>
-
                 <div class="col-md-6">
                     <label for="{{ form.prevision.id_for_label }}" class="form-label">{{ form.prevision.label }}</label>
                     {{ form.prevision }}
+                    <div id="msg_id_prevision" class="feedback-msg"></div>
                     {% for error in form.prevision.errors %}
                         <div class="text-danger small">{{ error }}</div>
                     {% endfor %}
                 </div>
+
             </div>
 
             <div class="text-center mt-4">
