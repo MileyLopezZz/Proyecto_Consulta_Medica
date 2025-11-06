@@ -7,9 +7,9 @@ class FichaMedicaForm(forms.ModelForm):
         label='RUT Paciente',
         max_length=15,
         required=False,
-        widget=forms.TextInput(attrs={
+        widget=forms.TextInput(attrs={            
             'placeholder': 'Ingrese RUT del paciente',
-            'class': 'form-control'
+            'class': 'form-control input-rut'                  
         })
     )
 
@@ -41,6 +41,7 @@ class FichaMedicaForm(forms.ModelForm):
                 'class': 'form-control'
             }),
         }
+
 
 
 

@@ -14,7 +14,6 @@ def ficha_medica_view(request):
             rut = form.cleaned_data.get('rut_paciente')
             ficha = form.save(commit=False)
 
-            # Ya NO se busca por RUT. Solo se guardan los datos ingresados manualmente
             ficha.nombre_paciente = form.cleaned_data.get('nombre_paciente')
             ficha.apellido_paciente = form.cleaned_data.get('apellido_paciente')
             ficha.telefono_paciente = form.cleaned_data.get('telefono_paciente')
@@ -30,13 +29,22 @@ def ficha_medica_view(request):
 
     return render(request, 'fichaMedica.html', {'form': form})
 
+def buscar_paciente(request):
+    rut = request.GET.get('rut')
+    try:
+        paciente = Paciente.objects.get(rut=rut)
+        data = {
+            'nombre': paciente.nombre,
+            'apellido': paciente.apellido,
+            'telefono': paciente.telefono,
+            'direccion': paciente.direccion,
+        }
+        return JsonResponse(data)
+    except Paciente.DoesNotExist:
+        return JsonResponse({'error': 'Paciente no encontrado'}, status=404)
 
-# 🔴 Se elimina completamente la función de búsqueda por RUT
-# def buscar_paciente(request):
-#     pass
 
 
-# --------------------- PACIENTES ---------------------
 def paciente_view(request):
     if request.method == 'POST':
         form = PacienteForm(request.POST)
