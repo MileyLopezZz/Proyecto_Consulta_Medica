@@ -1,17 +1,29 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menú Doctor | Dr. Constanzo</title>
-    <link rel="stylesheet" href="{% static 'css/styled.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
-    
+    <link rel="stylesheet" href="{% static 'css/stylemenudoctor.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        html { 
-            scroll-behavior: smooth; 
+        html { scroll-behavior: smooth; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--color-arena-medica);
+        }
+        th {
+            background-color: var(--color-calido-medico);
+            color: var(--color-primario);
+            font-weight: 600;
         }
     </style>
 </head>
@@ -26,13 +38,8 @@
                 <li><a href="{% url 'home' %}">Ir al Home Público</a></li>
             </ul>
 
-            <div class="nav-actions">
-                </div>
-
             <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
         </nav>
     </header>
@@ -40,45 +47,33 @@
     <main class="doctor-dashboard-layout">
         <div class="container doctor-dashboard-container">
             
+            <!-- Barra lateral -->
             <aside class="sidebar doctor-sidebar">
-            <div class="logo-area">
-                <div class="logo-initials">
-                    <img src="{% static 'img/Foto perfil.png' %}" alt="Foto del Doctor"> 
-                 </div>
-            </div>
+                <div class="logo-area">
+                    <div class="logo-initials">
+                        <img src="{% static 'img/Foto perfil.png' %}" alt="Foto del Doctor"> 
+                    </div>
+                </div>
                 
                 <div class="doctor-info-card">
                     <h2>{{ doctor.full_name }}</h2>
                     <p class="experience-years">{{ doctor.experience }}</p>
-                    <div class="contact-detail">
-                        <i class="fas fa-envelope"></i>
-                        <p>{{ doctor.email }}</p>
-                    </div>
-                    <div class="contact-detail">
-                        <i class="fas fa-phone"></i>
-                        <p>{{ doctor.phone }}</p>
-                    </div>
-                    <div class="contact-detail">
-                        <i class="fas fa-id-card"></i>
-                        <p>{{ doctor.license }}</p>
-                    </div>
+                    <div class="contact-detail"><i class="fas fa-envelope"></i><p>{{ doctor.email }}</p></div>
+                    <div class="contact-detail"><i class="fas fa-phone"></i><p>{{ doctor.phone }}</p></div>
+                    <div class="contact-detail"><i class="fas fa-id-card"></i><p>{{ doctor.license }}</p></div>
                 </div>
                 
                 <nav class="doctor-nav-menu">
-                    <a href="#seccion-agenda" class="nav-item active"> 
-                        <i class="fas fa-calendar-alt"></i> Agenda
-                    </a>
-                    <a href="#seccion-pacientes" class="nav-item"> 
-                        <i class="fas fa-user-friends"></i> Pacientes
-                    </a>
-                    <a href="#seccion-fichas" class="nav-item"> 
-                        <i class="fas fa-file-alt"></i> Fichas Médicas
-                    </a>
+                    <a href="#seccion-agenda" class="nav-item active"><i class="fas fa-calendar-alt"></i> Agenda</a>
+                    <a href="#seccion-fichas" class="nav-item"><i class="fas fa-file-alt"></i> Fichas Médicas</a>
+                    <a href="#seccion-pacientes" class="nav-item"><i class="fas fa-user-friends"></i> Pacientes</a>
                 </nav>
             </aside>
 
+            <!-- Contenido principal -->
             <section class="main-content doctor-content">
                 
+                <!-- Agenda -->
                 <div class="welcome-header" id="seccion-agenda">
                     <h1>Buenos días, {{ doctor.greeting }}</h1>
                     <p>Tienes <span class="highlight-number">{{ num_citas }}</span> citas programadas para hoy.</p>
@@ -86,42 +81,64 @@
 
                 <hr class="section-divider">
 
+                <!-- AGENDA DE HOY -->
                 <div class="agenda-section">
                     <h2>Agenda de Hoy</h2>
-                    
-                    {% for cita in citas_hoy %}
-                    <article class="appointment-card">
-                        <div class="appointment-details">
-                            <h3>{{ cita.nombre }}</h3>
-                            <p class="consult-type">{% if cita.estado == 'Confirmado' %}Consulta de seguimiento{% else %}Primera consulta{% endif %}</p>
-                            <p class="consult-info">🗓️ {{ cita.hora }} | 📍 Consultorio 301</p>
-                            <p class="consult-reason">{{ cita.razon }}</p>
-                        </div>
-                        <div class="appointment-actions">
-                            {% if cita.estado == 'Confirmado' %}
-                                <span class="btn btn-confirmar">Confirmado</span>
-                            {% elif cita.estado == 'Reprogramar' %}
-                                <span class="btn btn-reprogramar">Reprogramar</span>
-                            {% else %}
-                                <span class="btn btn-pendiente">Pendiente</span>
-                            {% endif %}
-                            <a href="{% url 'paciente' %}" class="btn btn-outline">Ver Paciente</a> 
-                        </div>
-                    </article>
-                    {% endfor %}
+
+                    {% if citas_hoy %}
+                        {% for cita in citas_hoy %}
+                        <article class="appointment-card">
+                            <div class="appointment-details">
+                                <h3>{{ cita.1 }} {{ cita.2 }}</h3>
+                                <p class="consult-type">{{ cita.5 }}</p>
+                                <p class="consult-info">🗓️ {{ cita.3|date:"H:i" }} - {{ cita.4|date:"H:i" }} | 📍 Consultorio 301</p>
+                            </div>
+
+                            <div class="appointment-actions">
+                                {% if cita.6 == "Confirmada" %}
+                                    <span class="btn btn-confirmar">{{ cita.6 }}</span>
+                                {% elif cita.6 == "En espera" %}
+                                    <span class="btn btn-pendiente">{{ cita.6 }}</span>
+                                {% elif cita.6 == "Anulada" %}
+                                    <span class="btn btn-reprogramar">{{ cita.6 }}</span>
+                                {% else %}
+                                    <span class="btn btn-outline">{{ cita.6 }}</span>
+                                {% endif %}
+                            </div>
+                        </article>
+                        {% endfor %}
+                    {% else %}
+                        <p style="text-align: center; color: #888;">No hay citas programadas para hoy.</p>
+                    {% endif %}
                 </div>
 
                 <hr class="section-divider">
 
+                <!-- GESTIÓN DE FICHAS MÉDICAS -->
                 <div class="recetas-section" id="seccion-fichas"> 
-                    <header class="section-header-recetas">
+                    <header class="section-header-recetas" style="display: flex; justify-content: space-between; align-items: center;">
                         <h2>Gestión de Fichas Médicas</h2>
                         <a href="{% url 'ficha_medica' %}" class="btn btn-primary btn-nueva-receta">
                             <i class="fas fa-plus"></i> Crear Nueva Ficha
                         </a>
                     </header>
+
+                    <!-- Barra de búsqueda -->
+                    <form method="get" style="margin-top: 15px; display: flex; gap: 10px; align-items: center;">
+                        <input 
+                            type="text" 
+                            name="buscar" 
+                            value="{{ buscar }}" 
+                            placeholder="Buscar por nombre o RUT del paciente..." 
+                            class="form-control"
+                            style="padding: 8px; flex: 1; border-radius: 6px; border: 1px solid #ccc;"
+                        >
+                        <button type="submit" class="btn btn-secondary" style="padding: 8px 15px;">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </form>
                     
-                    <div class="recetas-list-card card-shadow">
+                    <div class="recetas-list-card card-shadow" style="margin-top: 20px;">
                         <p style="margin-bottom: 20px; color: #555;">Aquí puede revisar, editar y eliminar fichas médicas existentes.</p>
                         
                         <div class="recetas-table-grid">
@@ -134,35 +151,81 @@
                             
                             {% for ficha in fichas_medicas %}
                             <div class="table-row" style="display: grid; grid-template-columns: 2fr 2fr 1.5fr 1fr; padding: 15px 0; border-bottom: 1px solid #eee;">
-                                <span>{{ ficha.paciente }}</span>
-                                <span style="font-style: italic;">{{ ficha.diagnostico }}</span>
-                                <span>{{ ficha.fecha }}</span>
+                                <span>{{ ficha.nombre_paciente }}</span>
+                                <span style="font-style: italic;">{{ ficha.titulo }}</span>
+                                <span>{{ ficha.hora_ficha|date:"d/m/Y H:i" }}</span>
                                 <span class="action-buttons">
-                                    <button class="action-btn view-btn" title="Ver Detalle"><i class="fas fa-eye"></i></button>
-                                    <button class="action-btn edit-btn" title="Editar Ficha"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn delete-btn" title="Eliminar Ficha"><i class="fas fa-trash-alt"></i></button>
+                                    <a href="{% url 'ver_ficha' ficha.id_ficha %}" class="action-btn view-btn" title="Ver Detalle">
+                                        <i class="fa-regular fa-file-lines"></i>
+                                    </a>
+                                    <a href="{% url 'editar_ficha' ficha.id_ficha %}" class="action-btn edit-btn" title="Editar Ficha">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                    <a href="{% url 'eliminar_ficha' ficha.id_ficha %}" class="action-btn delete-btn" title="Eliminar Ficha" onclick="return confirm('¿Está seguro que desea eliminar esta ficha médica?');">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </a>
                                 </span>
                             </div>
                             {% empty %}
                                 <p style="padding: 20px 0; text-align: center; color: #888; grid-column: 1 / -1;">No hay fichas médicas registradas.</p>
                             {% endfor %}
                         </div>
+
+                        {% if fichas_medicas|length >= 5 and not buscar %}
+                        <div style="text-align: center; margin-top: 20px;">
+                            <p style="color: #666;">Mostrando las 5 fichas más recientes.</p>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
 
                 <hr class="section-divider">
 
+                <!-- BUSCAR PACIENTES -->
                 <div class="pacientes-section" id="seccion-pacientes">
                     <h2>Buscar Pacientes</h2>
-                    
-                    <div class="search-bar">
-                        <input type="text" placeholder="Buscar paciente..." class="patient-search-input">
-                        <i class="fas fa-search"></i>
-                    </div>
+                    <form method="get" style="margin-top: 15px; display: flex; gap: 10px; align-items: center;">
+                        <input 
+                            type="text" 
+                            name="buscar" 
+                            value="{{ buscar }}" 
+                            placeholder="Buscar paciente por nombre o RUT..." 
+                            class="form-control"
+                            style="padding: 8px; flex: 1; border-radius: 6px; border: 1px solid #ccc;"
+                        >
+                        <button type="submit" class="btn btn-secondary" style="padding: 8px 15px;">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </form>
 
-                    <a href="{% url 'paciente' %}" class="btn btn-primary">
-                        <i class="fas fa-list"></i> Ver Lista Completa de Pacientes
-                    </a>
+                    {% if pacientes %}
+                        <div style="margin-top: 20px;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Apellido</th>
+                                        <th>RUT</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in pacientes %}
+                                    <tr>
+                                        <td>{{ p.nombre }}</td>
+                                        <td>{{ p.apellido }}</td>
+                                        <td>{{ p.rut }}</td>
+                                        <td>
+                                            <a href="{% url 'detalle_paciente' p.id_paciente %}" class="btn btn-outline">Ver Detalle</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% elif buscar %}
+                        <p style="margin-top: 15px; color: #888;">No se encontraron pacientes con ese nombre o RUT.</p>
+                    {% endif %}
                 </div>
                 
             </section>
@@ -175,7 +238,6 @@
             <p>© 2025 Clínica. Todos los derechos reservados.</p>
         </div>
     </footer>
-
 
     <script src="{% static 'js/script.js' %}"></script>
 </body>

@@ -38,3 +38,24 @@ class FichaMedica(models.Model):
 
     def __str__(self):
         return f"Ficha de {self.nombre_paciente}"
+    
+class CitaMedica(models.Model):
+    ESTADOS = [
+        ('Confirmada', 'Confirmada'),
+        ('En espera', 'En espera'),
+        ('Anulada', 'Anulada'),
+    ]
+
+    id_cita = models.BigAutoField(primary_key=True)
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, related_name='citas')
+    fecha_cita = models.DateField(verbose_name="Fecha de la cita")
+    hora_cita = models.TimeField(verbose_name="Hora de la cita")
+    motivo = models.CharField(max_length=200, verbose_name="Motivo de la consulta")
+    estado = models.CharField(max_length=20, choices=ESTADOS, default='En espera')
+
+    class Meta:
+        db_table = 'citas_medicas'
+        ordering = ['fecha_cita', 'hora_cita']
+
+    def __str__(self):
+        return f"Cita {self.fecha_cita} {self.hora_cita} - {self.paciente.nombre} ({self.estado})"

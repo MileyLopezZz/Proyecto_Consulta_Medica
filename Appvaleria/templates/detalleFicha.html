@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle Ficha Médica</title>
+    <link rel="stylesheet" href="{% static 'css/styleDetalleFicha.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Ficha Médica de {{ ficha.nombre_paciente }}</h2>
+        <p><strong>RUT:</strong> {{ ficha.rut_paciente }}</p>
+        <p><strong>Título:</strong> {{ ficha.titulo }}</p>
+        <p><strong>Notas:</strong> {{ ficha.notas }}</p>
+        <p><strong>Dirección:</strong> {{ ficha.direccion_paciente }}</p>
+        <p><strong>Teléfono:</strong> {{ ficha.telefono_paciente }}</p>
+        <p><strong>Fecha y hora:</strong> {{ ficha.hora_ficha|date:"d/m/Y H:i" }}</p>
+
+        <a href="{% url 'menu_doctor' %}" class="btn btn-secondary">Volver</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del Paciente</title>
+    <link rel="stylesheet" href="{% static 'css/stylemenudoctor.css' %}">
+</head>
+<body>
+    <div class="container doctor-content" style="margin-top: 40px;">
+        <h2>Detalle del Paciente</h2>
+        <div class="paciente-info" style="margin-bottom: 25px;">
+            <p><strong>Nombre:</strong> {{ paciente.nombre }}</p>
+            <p><strong>Apellido:</strong> {{ paciente.apellido }}</p>
+            <p><strong>RUT:</strong> {{ paciente.rut }}</p>
+            <p><strong>Teléfono:</strong> {{ paciente.telefono }}</p>
+            <p><strong>Dirección:</strong> {{ paciente.direccion }}</p>
+        </div>
+
+        <h3>Fichas Médicas</h3>
+        {% if fichas %}
+            <ul>
+                {% for ficha in fichas %}
+                    <li><strong>{{ ficha.titulo }}</strong> — {{ ficha.hora_ficha|date:"d/m/Y H:i" }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay fichas médicas registradas.</p>
+        {% endif %}
+
+        <h3 style="margin-top: 30px;">Horas Agendadas</h3>
+        {% if citas %}
+            <table style="width:100%; border-collapse: collapse; margin-top:10px;">
+                <thead>
+                    <tr style="background-color: var(--color-calido-medico);">
+                        <th>Inicio</th><th>Fin</th><th>Motivo</th><th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in citas %}
+                    <tr style="text-align:center; border-bottom: 1px solid #ddd;">
+                        <td>{{ c.0|date:"d/m/Y H:i" }}</td>
+                        <td>{{ c.1|date:"d/m/Y H:i" }}</td>
+                        <td>{{ c.2 }}</td>
+                        <td>{{ c.3 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No hay horas agendadas para este paciente.</p>
+        {% endif %}
+
+        <a href="{% url 'menu_doctor' %}" class="btn btn-secondary" style="margin-top: 25px;">Volver al Menú del Doctor</a>
+    </div>
+</body>
+</html>

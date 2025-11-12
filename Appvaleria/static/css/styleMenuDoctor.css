@@ -8,11 +8,6 @@
     --color-acento: #A58A54;         /* Color para destacar elementos (íconos, números) */
     --color-error: #D8000C;         /* Color para mensajes de error */
     --color-shadow: rgba(38, 32, 22, 0.08); /* Sombra sutil basada en el primario */
-
-    /* Nuevos colores para acciones CRUD */
-    --color-accion-ver: #4A90E2;    /* Azul para Ver/Detalle */
-    --color-accion-editar: #F5A623; /* Naranja para Editar */
-    --color-accion-eliminar: #D0021B; /* Rojo para Eliminar */
 }
 
 * {
@@ -122,12 +117,11 @@ a {
 }
 
 .logo-initials img {
-    width: 100%; /* La imagen ocupa todo el ancho */
-    height: 100%; /* La imagen ocupa todo el alto */
-    object-fit: cover; /* Escala la imagen para cubrir el área, recortando si es necesario */
-    display: block; /* Elimina cualquier espacio extra */
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block;
 }
-
 
 .doctor-info-card {
     padding-bottom: 25px;
@@ -279,18 +273,11 @@ a {
 }
 .btn:hover { opacity: 0.9; }
 
-.btn-confirmar { background-color: #5cb85c; color: white; } /* Verde para Confirmado */
-.btn-reprogramar { background-color: #f0ad4e; color: var(--color-primario); } /* Amarillo para Reprogramar */
-.btn-pendiente { background-color: var(--color-calido-medico); color: var(--color-texto-claro); } /* Color neutro para Pendiente */
-.btn-outline { 
-    background-color: transparent; 
-    border: 1px solid var(--color-primario); 
-    color: var(--color-primario); 
-}
-.btn-outline:hover { 
-    background-color: var(--color-primario); 
-    color: white; 
-}
+.btn-confirmar { background-color: #5cb85c; color: white; }
+.btn-reprogramar { background-color: #f0ad4e; color: var(--color-primario); }
+.btn-pendiente { background-color: var(--color-calido-medico); color: var(--color-texto-claro); }
+.btn-outline { background-color: transparent; border: 1px solid var(--color-primario); color: var(--color-primario); }
+.btn-outline:hover { background-color: var(--color-primario); color: white; }
 
 .section-header-recetas {
     display: flex;
@@ -317,7 +304,7 @@ a {
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    overflow-x: auto; /* Permite scroll horizontal en móvil si es necesario */
+    overflow-x: auto;
 }
 
 .recetas-table-grid {
@@ -325,10 +312,9 @@ a {
     flex-direction: column;
     font-size: 0.95rem;
     width: 100%;
-    min-width: 600px; /* Asegura un ancho mínimo en pantallas pequeñas */
+    min-width: 600px;
 }
 
-/* Estilo del encabezado de la tabla */
 .recetas-table-grid .table-header {
     background-color: var(--color-calido-medico) !important;
     border-bottom: 2px solid var(--color-acento) !important;
@@ -339,7 +325,6 @@ a {
     padding: 12px 0 !important;
 }
 
-/* Estilo de cada fila */
 .recetas-table-grid .table-row {
     transition: background-color 0.2s;
 }
@@ -358,39 +343,59 @@ a {
 
 .recetas-table-grid .table-row .action-buttons {
     display: flex;
-    gap: 5px;
-    justify-content: flex-start;
+    gap: 8px;
+    justify-content: center;
 }
 
-/* Botones de acción dentro de la tabla */
+/* === CRUD ÍCONOS MODERNOS Y FORMALES === */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
 .action-btn {
+    background: none;
     border: none;
-    background: transparent;
     cursor: pointer;
-    font-size: 1.1rem;
-    padding: 5px;
-    border-radius: 5px;
-    transition: background-color 0.2s, color 0.2s;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.25s ease;
+    font-size: 1.2rem;
 }
 
+/* Colores integrados con la paleta clínica */
+.view-btn i {
+    color: var(--color-acento); /* Dorado elegante */
+}
+.edit-btn i {
+    color: var(--color-primario); /* Marrón oscuro */
+}
+.delete-btn i {
+    color: var(--color-error); /* Rojo institucional */
+}
+
+/* Hover formal */
 .action-btn:hover {
-    background-color: var(--color-arena-medica);
+    background-color: var(--color-calido-medico);
+    transform: scale(1.05);
+    box-shadow: 0 2px 6px var(--color-shadow);
 }
 
-.view-btn { color: var(--color-accion-ver); }
-.edit-btn { color: var(--color-accion-editar); }
-.delete-btn { color: var(--color-accion-eliminar); }
-
-/* (Sección de formulario anterior, se mantiene por si se reutiliza en otra vista) */
-.receta-form-card {
-    background-color: var(--color-crema-medico);
-    border: 1px solid var(--color-arena-medica);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    display: none; /* Ocultar si ya no se usa aquí */
+/* Íconos con mejor legibilidad */
+.action-btn i {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    transition: opacity 0.2s, transform 0.2s;
 }
 
+.action-btn:hover i {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+/* Pacientes */
 .pacientes-section h2 {
     font-size: 1.8rem;
     font-weight: 600;
@@ -429,6 +434,7 @@ a {
     padding: 20px 0;
     text-align: center;
 }
+
 .footer-bottom p {
     color: var(--color-texto-claro);
     font-size: 0.9rem;
@@ -439,7 +445,6 @@ a {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-
     .doctor-sidebar {
         position: static;
         margin-bottom: 20px;
@@ -462,11 +467,9 @@ a {
         display: block;
         margin: 5px 0;
     }
-    
     .doctor-content {
         padding: 20px;
     }
-
     .appointment-card {
         flex-direction: column;
         align-items: flex-start;
@@ -483,16 +486,12 @@ a {
     .btn {
         flex-grow: 1;
     }
-
     .recetas-table-grid {
-        min-width: 100%; /* Eliminar min-width si es necesario, o mantenerlo para forzar scroll */
+        min-width: 100%;
         display: block;
     }
     .recetas-table-grid .table-header,
     .recetas-table-grid .table-row {
-        display: none !important; /* Ocultar la estructura Grid para usar un estilo de tarjeta vertical en móvil */
+        display: none !important;
     }
-    .recetas-table-grid .table-header {
-        display: none;
-    }  
 }

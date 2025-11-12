@@ -77,7 +77,6 @@ function validarPrevision() {
     return ok;
 }
 
-// ---------------- Eventos ----------------
 const validadores = [
     validarRut, validarNombre, validarApellido,
     validarEmail, validarDireccion, validarTelefono, validarPrevision

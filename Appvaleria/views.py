@@ -1,34 +1,53 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
-from .forms import FichaMedicaForm, PacienteForm
-from .models import Paciente, FichaMedica
-from django.contrib.auth.models import AnonymousUser
 from django.contrib import messages
+from django.db.models import Q
+from .forms import FichaMedicaForm, PacienteForm
+from .models import Paciente, FichaMedica, CitaMedica
+from datetime import date
+from django.db import connection
 
 
-# --------------------- FICHA MÉDICA ---------------------
+# --------------------- CRUD FICHA MÉDICA ---------------------
 def ficha_medica_view(request):
     if request.method == 'POST':
         form = FichaMedicaForm(request.POST)
         if form.is_valid():
-            rut = form.cleaned_data.get('rut_paciente')
             ficha = form.save(commit=False)
-
-            ficha.nombre_paciente = form.cleaned_data.get('nombre_paciente')
-            ficha.apellido_paciente = form.cleaned_data.get('apellido_paciente')
-            ficha.telefono_paciente = form.cleaned_data.get('telefono_paciente')
-            ficha.direccion_paciente = form.cleaned_data.get('direccion_paciente')
-            ficha.prevision_paciente = form.cleaned_data.get('prevision_paciente')
-            ficha.rut_paciente = rut
-
             ficha.save()
-            return redirect('ficha_medica')
-
+            messages.success(request, "Ficha médica creada correctamente.")
+            return redirect('menu_doctor')
     else:
         form = FichaMedicaForm()
-
     return render(request, 'fichaMedica.html', {'form': form})
 
+
+def editar_ficha(request, id):
+    ficha = get_object_or_404(FichaMedica, id_ficha=id)
+    if request.method == 'POST':
+        form = FichaMedicaForm(request.POST, instance=ficha)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Ficha médica actualizada correctamente.")
+            return redirect('menu_doctor')
+    else:
+        form = FichaMedicaForm(instance=ficha)
+    return render(request, 'fichaMedica.html', {'form': form, 'editar': True})
+
+
+def eliminar_ficha(request, id):
+    ficha = get_object_or_404(FichaMedica, id_ficha=id)
+    ficha.delete()
+    messages.warning(request, "Ficha médica eliminada correctamente.")
+    return redirect('menu_doctor')
+
+
+def ver_ficha(request, id):
+    ficha = get_object_or_404(FichaMedica, id_ficha=id)
+    return render(request, 'detalleFicha.html', {'ficha': ficha})
+
+
+# --------------------- BÚSQUEDA DE PACIENTES ---------------------
 def buscar_paciente(request):
     rut = request.GET.get('rut')
     try:
@@ -44,7 +63,7 @@ def buscar_paciente(request):
         return JsonResponse({'error': 'Paciente no encontrado'}, status=404)
 
 
-
+# --------------------- CRUD PACIENTES ---------------------
 def paciente_view(request):
     if request.method == 'POST':
         form = PacienteForm(request.POST)
@@ -55,16 +74,11 @@ def paciente_view(request):
             if paciente_existente:
                 for campo, valor in form.cleaned_data.items():
                     setattr(paciente_existente, campo, valor)
-                # Asigna usuario solo si hay sesión activa
-                if request.user.is_authenticated:
-                    paciente_existente.usuarios_id_usuario = request.user.id
                 paciente_existente.save()
             else:
-                paciente_nuevo = form.save(commit=False)
-                if request.user.is_authenticated:
-                    paciente_nuevo.usuarios_id_usuario = request.user.id
-                paciente_nuevo.save()
+                form.save()
 
+            messages.success(request, "Paciente guardado correctamente.")
             return redirect('paciente')
     else:
         form = PacienteForm()
@@ -72,17 +86,15 @@ def paciente_view(request):
     return render(request, 'pacientes.html', {'form': form})
 
 
-def is_doctor_check(user):
-    return user.is_authenticated and (user.is_staff or user.groups.filter(name='Doctor').exists())
-
+# --------------------- MENÚ DOCTOR ---------------------
+from django.db.models import Q
+from django.db import connection
+from .models import Paciente, FichaMedica
 
 def menu_doctor(request):
-    """
-    Vista principal del dashboard del doctor, accesible directamente (sin credenciales).
-    Carga datos simulados para el Dr. Constanzo.
-    """
-    
-    # Datos simulados del Doctor
+    from datetime import date
+    hoy = date.today()
+
     doctor_data = {
         'full_name': 'Dr. Claudio Constanzo',
         'experience': '9 años de experiencia',
@@ -92,75 +104,124 @@ def menu_doctor(request):
         'greeting': 'Dr. Constanzo',
     }
 
-    # Lógica para obtener las 4 citas de hoy
-    citas_hoy = [
-        {'nombre': 'María González', 'hora': '10:00 AM', 'razon': 'Control de presión arterial', 'estado': 'Confirmado'},
-        {'nombre': 'Carlos Rodríguez', 'hora': '10:30 AM', 'razon': 'Dolor de articulación', 'estado': 'Reprogramar'},
-        {'nombre': 'Laura Sánchez', 'hora': '02:00 PM', 'razon': 'Evaluación anual', 'estado': 'Pendiente'},
-        {'nombre': 'Roberta Díaz', 'hora': '03:00 PM', 'razon': 'Resultados de electrocardiograma', 'estado': 'Confirmado'},
-    ]
+    # --- Citas del día ---
+    from .models import FichaMedica
+    citas_hoy = []
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT h.id_hora, p.nombre, p.apellido, h.hora_inicio, h.hora_final, h.razon, h.estado
+                FROM hora_agendada h
+                JOIN paciente p ON p.id_paciente = h.paciente_id
+                WHERE DATE(h.hora_inicio) = CURDATE()
+                ORDER BY h.hora_inicio ASC;
+            """)
+            citas_hoy = cursor.fetchall()
+    except Exception:
+        citas_hoy = []
 
-    fichas_medicas = [
-        {
-            'id': '001A', 
-            'paciente': 'Martina Flores C.', 
-            'fecha': '20/09/2024', 
-            'diagnostico': 'Control anual. Colesterol levemente elevado. Dieta recomendada.'
-        },
-        {
-            'id': '002B', 
-            'paciente': 'Sebastián Vidal P.', 
-            'fecha': '05/10/2024', 
-            'diagnostico': 'Consulta por resfriado común persistente. Reposo y paracetamol.'
-        },
-        {
-            'id': '003C', 
-            'paciente': 'Claudia Herrera R.', 
-            'fecha': '15/08/2024', 
-            'diagnostico': 'Revisión post-operatoria de apendicitis. Cicatrización normal. Retiro de puntos y alta médica.'
-        },
-        {
-            'id': '004D', 
-            'paciente': 'Javier Pérez L.', 
-            'fecha': '10/07/2024', 
-            'diagnostico': 'Migrañas crónicas. Ajuste de medicación preventiva. Se programa seguimiento en 30 días.'
-        }
-    ]
-    
-    # Lógica para obtener la lista de pacientes (para el select de Recetas)
-    pacientes_list = [
-        {'id': 1, 'nombre_completo': 'María González'},
-        {'id': 2, 'nombre_completo': 'Carlos Rodríguez'},
-        {'id': 3, 'nombre_completo': 'Laura Sánchez'},
-        {'id': 4, 'nombre_completo': 'Roberta Díaz'},
-        {'id': 5, 'nombre_completo': 'Felipe Torres'},
-    ]
-    
+    # --- Fichas médicas recientes ---
+    fichas_medicas = FichaMedica.objects.all().order_by('-hora_ficha')[:5]
+
+    # --- Búsqueda de pacientes ---
+    query = request.GET.get('buscar', '').strip()
+    pacientes = []
+    if query:
+        pacientes = Paciente.objects.filter(
+            Q(nombre__icontains=query) | Q(apellido__icontains=query) | Q(rut__icontains=query)
+        )
+
     context = {
+        'doctor': doctor_data,
+        'fichas_medicas': fichas_medicas,
         'citas_hoy': citas_hoy,
-        'object_list': pacientes_list,
         'num_citas': len(citas_hoy),
-        'doctor': doctor_data, # Pasamos el diccionario del doctor
-        'fichas_medicas': fichas_medicas, # <-- NUEVO
+        'buscar': query,
+        'pacientes': pacientes,
     }
-    
     return render(request, 'menuDoctor.html', context)
 
 
+
+# --------------------- LOGIN ---------------------
 def login_doctor(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        #Credenciales fijas del doctor
         correo_doctor = "doctor@gmail.com"
         clave_doctor = "doctor1234"
 
         if email == correo_doctor and password == clave_doctor:
             messages.success(request, "Bienvenido doctor.")
-            # Redirige al panel o vista especial del doctor
             return redirect('menu_doctor')
         else:
             messages.error(request, "Correo o contraseña incorrectos.")
 
     return render(request, 'loginDoctor.html')
+
+
+
+def buscar_paciente_doctor(request):
+    query = request.GET.get('buscar', '').strip()
+    paciente = None
+    fichas = []
+    citas = []
+
+    if query:
+        # Buscar paciente por nombre, apellido o rut
+        paciente = Paciente.objects.filter(
+            Q(nombre__icontains=query) | 
+            Q(apellido__icontains=query) | 
+            Q(rut__icontains=query)
+        ).first()
+
+        if paciente:
+            # Fichas médicas asociadas
+            fichas = FichaMedica.objects.filter(rut_paciente=paciente.rut).order_by('-hora_ficha')
+
+            # Horas agendadas del paciente (desde tabla hora_agendada)
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT hora_inicio, hora_final, razon, estado 
+                    FROM hora_agendada 
+                    WHERE paciente_id = %s 
+                    ORDER BY hora_inicio DESC
+                """, [paciente.id_paciente])
+                citas = cursor.fetchall()
+
+    context = {
+        'paciente': paciente,
+        'fichas': fichas,
+        'citas': citas,
+        'buscar': query,
+    }
+
+    return render(request, 'buscarPaciente.html', context)
+
+
+def detalle_paciente(request, id):
+    # Buscar el paciente por su ID
+    paciente = get_object_or_404(Paciente, id_paciente=id)
+
+    # Fichas médicas asociadas
+    fichas = FichaMedica.objects.filter(rut_paciente=paciente.rut).order_by('-hora_ficha')
+
+    # Citas agendadas (tabla hora_agendada)
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT hora_inicio, hora_final, razon, estado
+            FROM hora_agendada
+            WHERE paciente_id = %s
+            ORDER BY hora_inicio DESC
+        """, [paciente.id_paciente])
+        citas = cursor.fetchall()
+
+    context = {
+        'paciente': paciente,
+        'fichas': fichas,
+        'citas': citas,
+    }
+    return render(request, 'detallePaciente.html', context)
+
+
