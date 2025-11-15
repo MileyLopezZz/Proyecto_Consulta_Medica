@@ -8,34 +8,51 @@
     <link rel="stylesheet" href="{% static 'css/agendar.css' %}">
     <script src="{% static 'js/horarios.js' %}" defer></script>
     <script src="{% static 'js/validaciones_agendar.js' %}" defer></script>
+    <style>
+      /*  mostrar errores del form */
+      .errors { color:#c0392b; margin:.25rem 0 .75rem }
+      .sr-note { font-size:.9rem; opacity:.8 }
+    </style>
 </head>
 
 <body>
-    <main class="container">
-        <div class="card">
-            <h1>Agendar tu cita con <br><span>Doctor Constanzo</span></h1>
+  <main class="container">
+    <div class="card">
+      <h1>Agendar tu cita con <br><span>Doctor Constanzo</span></h1>
 
-            <form id="form-agendar" method="POST">
-                {% csrf_token %}
-                <label>Selecciona una Fecha</label>
-                <input type="date" id="fecha" name="fecha" required>
+      <form id="form-agendar" method="POST">
+        {% csrf_token %}
 
-                <label>Horarios Disponibles</label>
-                <div id="mensaje-horarios" class="mensaje-horarios"></div>
-                <div class="horarios-container" id="horarios-container">
-                    <!-- Los horarios se insertarán dinámicamente -->
-                </div>
+    {{ form.non_field_errors }}
+    {% if messages %}
+      {% for m in messages %}<p class="errors">{{ m }}</p>{% endfor %}
+    {% endif %}
 
-                <label>Motivo de la cita</label>
-                <textarea name="motivo" placeholder="Describe brevemente el motivo..." required></textarea>
+    <!-- Fecha (etiqueta + el campo del form) -->
+    <label for="id_fecha">Selecciona una Fecha</label>
+    {{ form.fecha }}
 
-                <div class="buttons">
-                    <button type="submit" class="btn">Agendar</button>
-                    <a href="{% url 'UsuarioView' %}" class="cancel">Cancelar</a>
-                </div>
-            </form>
-        </div>
-    </main>
-</body>
+    <label>Horarios Disponibles</label>
+    <div id="mensaje-horarios" class="mensaje-horarios"></div>
+    <div class="horarios-container" id="horarios-container"></div>
+
+    <!-- Campo Hora del ModelForm -->
+    <label for="id_hora_inicio">Hora</label>
+    {{ form.hora_inicio }}
+
+    <!-- Motivo -->
+    <label for="id_razon">Motivo de la cita</label>
+    {{ form.razon }}
+
+    {{ form.estado }}  
+
+    <div class="buttons">
+      <button type="submit" class="btn">Agendar</button>
+      <a href="{% url 'UsuarioView' %}" class="cancel">Cancelar</a>
+    </div>
+      </form>
+    </div>
+  </main>
 </html>
+
 

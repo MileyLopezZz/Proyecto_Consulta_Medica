@@ -1,13 +1,14 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from datetime import time
+from django.conf import settings
 
 # Modelo para guardar las horas agendadas
 class HoraAgendada(models.Model):
     fecha = models.DateField()
     hora_inicio = models.TimeField()
     hora_final = models.TimeField()
-    # usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE) se usará esta linea cuando se implementen foreign keys
+    usuario = models.ForeignKey('auth.User', on_delete=models.CASCADE,related_name='horas_agendadas',null=True,blank=True)
     razon = models.CharField(max_length=300)
     estado = models.CharField(
         max_length=20, 
@@ -34,7 +35,7 @@ class Secretaria(models.Model):
     apellido_secretaria = models.CharField(max_length=50)
     email_secretaria = models.EmailField(max_length=100, unique=True)
     password_hash = models.CharField(max_length=255)
-    usuarios_id_usuario = models.BigIntegerField(blank=True, null=True)  # sin FK todavía
+    usuarios_id_usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,blank=True,db_column='usuarios_id_usuario', related_name='secretarias')
 
     class Meta:
         db_table = 'secretaria'

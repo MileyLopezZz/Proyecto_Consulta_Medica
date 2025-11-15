@@ -1,42 +1,33 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from .forms import HoraAgendadaForm
 
 def agendar_hora_view(request):
     # Validar sesión 
-    if not request.session.get('usuario_id'):
+    if not request.user.is_autenthicated:
         messages.error(request, "Debes iniciar sesión para agendar una hora.")
         return redirect('login')
 
-    horarios_disponibles = {}
-    fecha_seleccionada = None
-    horarios_dia = []
-
     # Si se envía una fecha, calculamos los horarios disponibles
     if request.method == 'POST':
-        fecha = request.POST.get('fecha')
-        motivo = request.POST.get('motivo')
+        form = HoraAgendadaForm(request.POST)
+        if form.is_valid():
+            instancia = form.save(commit=False)
+            instancia.usuario = request.user
 
-        if fecha:
-            fecha_seleccionada = datetime.strptime(fecha, "%Y-%m-%d")
-            dia_semana = fecha_seleccionada.strftime('%A')  # Monday, Tuesday...
+            dt_inicio=datetime.combine(instancia.fecha, instancia.hora_inicio)
+            instancia.hora_final = (dt_inicio + timedelta(minutes=30)).time()
 
-            if dia_semana in ['Monday', 'Tuesday', 'Wednesday', 'Thursday']:
-                horarios_dia = ['10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM',
-                                '3:00 PM', '3:30 PM', '4:00 PM', '5:00 PM', '6:00 PM']
-            elif dia_semana == 'Friday':
-                horarios_dia = ['10:30 AM', '11:00 AM', '12:00 PM']
-            else:
-                horarios_dia = []  # Sábado o domingo → sin atención
-
-        # Confirmación de cita
-        if motivo and fecha:
-            messages.success(request, f"Tu cita fue agendada para {fecha} ({motivo}) ✅")
+            instancia.save()
+            messages.success(request, "Hora agendada con éxito.")
             return redirect('confirmacion')
 
+    else:
+        form = HoraAgendadaForm(initial={'estado' : 'Pendiente'})
+
     return render(request, 'Appclaudio/agendarHora.html', {
-        'fecha_seleccionada': fecha_seleccionada,
-        'horarios_dia': horarios_dia
+        'form': form,
     })
 
 def confirmacion_view(request):
