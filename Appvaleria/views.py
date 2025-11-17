@@ -176,28 +176,7 @@ def buscar_paciente_doctor(request):
             Q(rut__icontains=query)
         ).first()
 
-        if paciente:
-            # Fichas médicas asociadas
-            fichas = FichaMedica.objects.filter(rut_paciente=paciente.rut).order_by('-hora_ficha')
 
-            # Horas agendadas del paciente (desde tabla hora_agendada)
-            with connection.cursor() as cursor:
-                cursor.execute("""
-                    SELECT hora_inicio, hora_final, razon, estado 
-                    FROM hora_agendada 
-                    WHERE paciente_id = %s 
-                    ORDER BY hora_inicio DESC
-                """, [paciente.id_paciente])
-                citas = cursor.fetchall()
-
-    context = {
-        'paciente': paciente,
-        'fichas': fichas,
-        'citas': citas,
-        'buscar': query,
-    }
-
-    return render(request, 'buscarPaciente.html', context)
 
 
 def detalle_paciente(request, id):
