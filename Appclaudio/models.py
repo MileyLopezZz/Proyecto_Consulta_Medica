@@ -30,15 +30,29 @@ class HoraAgendada(models.Model):
 
 
 class Secretaria(models.Model):
+    id_secretaria = models.BigAutoField(
+        primary_key=True,
+        db_column='id_secretaria'
+    )
+
     rut_secretaria = models.CharField(max_length=15, unique=True)
     nombre_secretaria = models.CharField(max_length=50)
     apellido_secretaria = models.CharField(max_length=50)
     email_secretaria = models.EmailField(max_length=100, unique=True)
     password_hash = models.CharField(max_length=255)
-    usuarios_id_usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,blank=True,db_column='usuarios_id_usuario', related_name='secretarias')
+
+    usuarios_id_usuario = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        db_column='usuarios_id_usuario',
+        related_name='secretarias'
+    )
 
     class Meta:
         db_table = 'secretaria'
+        managed = False  
 
     def __str__(self):
         return f"{self.nombre_secretaria} {self.apellido_secretaria}"

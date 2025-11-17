@@ -22,7 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if (!horaSeleccionada) {
+        const horaInputs = document.querySelectorAll('input[name="hora"]');
+        if (horaInputs.length === 0 || !horaSeleccionada) {
             alert(" Debes seleccionar una hora disponible.");
             e.preventDefault();
             return;
@@ -34,11 +35,22 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Bloquea fechas pasadas incluso si el navegador lo ignora
-        const fechaSeleccionada = new Date(fecha);
-        if (fechaSeleccionada < hoy.setHours(0, 0, 0, 0)) {
-            alert(" No puedes seleccionar una fecha pasada.");
+        const partes = fecha.split("-");
+        let fechaSeleccionadaDate;
+        if (partes[0].length === 4) {
+            fechaSeleccionadaDate = new Date(fecha);
+        } else {
+            const [dd, mm , yyyy] = partes;
+            fechaSeleccionadaDate = new Date(`${yyyy}-${mm}-${dd}`);
+        }
+        const hoyDate = new Date();
+        hoyDate.setHours(0, 0, 0, 0);
+        fechaSeleccionadaDate.setHours(0, 0, 0, 0);
+
+        if (fechaSeleccionadaDate < hoyDate) {
+            alert(" La fecha seleccionada no puede ser anterior a hoy.");
             e.preventDefault();
+            return;
         }
     });
 });
