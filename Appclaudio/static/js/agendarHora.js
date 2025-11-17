@@ -1,4 +1,3 @@
-// static/js/agendarHora.js
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector("form");
     const fechaInput = document.getElementById("fecha");
